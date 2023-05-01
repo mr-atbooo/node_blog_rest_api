@@ -6,7 +6,6 @@ const path = require('path');
 const errorsController = require('./controllers/errors');
 const categoryRoutes = require('./routes/category');
 const postRoutes = require('./routes/post');
-const feedRoutes = require('./routes/feed');
 
 const app = express();
 
@@ -25,14 +24,11 @@ app.use((req, res, next) => {
 
 app.use('/categories',categoryRoutes);
 app.use('/posts',postRoutes);
-app.use('/feed',feedRoutes);
 
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-// app.listen('3920',()=>{
-//     console.log('Node.js Web server at localhost:3920 is running');
-// });
+
 
 app.use(errorsController.error404);
 

@@ -64,8 +64,9 @@ if (!errors.isEmpty()) {
   category.save()
   .then(result => { 
     console.log(result);
-    res.status(200).json({
-      message: 'done'
+    res.status(201).json({
+      message: 'Category created successfully!',
+      category: result
     });
   })
   .catch(err => {

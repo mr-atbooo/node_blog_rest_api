@@ -108,14 +108,14 @@ router.post('/update',
         else
         {
             if(value){
-                // return Category.findById(value)
-                // .then(chCat => {
-                //     if (!chCat) {
-                //     return Promise.reject(
-                //         'The parent_id not Valid.'
-                //     );
-                //     }
-                // });
+                return Category.findById(value)
+                .then(chCat => {
+                    if (!chCat) {
+                    return Promise.reject(
+                        'The parent_id not Valid.'
+                    );
+                    }
+                });
             }
            
 
