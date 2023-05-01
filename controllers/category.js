@@ -1,6 +1,5 @@
-const fileHelper = require('../util/file');
-  const { validationResult } = require('express-validator');
-  const Category = require('../models/category');
+const { validationResult } = require('express-validator');
+const Category = require('../models/category');
 
 exports.getCategories = (req, res, next) => {
   

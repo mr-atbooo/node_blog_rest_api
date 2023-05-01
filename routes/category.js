@@ -40,16 +40,16 @@ router.post('/store',
         });
     }),
     body('parent_id',"parent_id is not valid")
-    .custom((value, { req }) => {
-        return Category.findById(value)
-        .then(chCat => {
-            if (!chCat) {
-            return Promise.reject(
-                'The parent_id not Valid.'
-            );
-            }
-        });
-    }),
+    // .custom((value, { req }) => {
+    //     return Category.findById(value)
+    //     .then(chCat => {
+    //         if (!chCat) {
+    //         return Promise.reject(
+    //             'The parent_id not Valid.'
+    //         );
+    //         }
+    //     });
+    // }),
 ],
 categoryController.storeCategory);
 // nd store category
