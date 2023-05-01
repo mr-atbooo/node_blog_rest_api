@@ -5,7 +5,9 @@ const path = require('path');
 
 const errorsController = require('./controllers/errors');
 const categoryRoutes = require('./routes/category');
+const tagRoutes = require('./routes/tag');
 const postRoutes = require('./routes/post');
+
 
 const app = express();
 
@@ -23,6 +25,7 @@ app.use((req, res, next) => {
 
 
 app.use('/categories',categoryRoutes);
+app.use('/tags',tagRoutes);
 app.use('/posts',postRoutes);
 
 
