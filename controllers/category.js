@@ -4,6 +4,7 @@ const Category = require('../models/category');
 exports.getCategories = (req, res, next) => {
   
   Category.find()
+  .populate('parentId','title')
     .then(categories => {
       res.status(200).json({
         categories: categories
@@ -11,7 +12,6 @@ exports.getCategories = (req, res, next) => {
     }
     )
     .catch(err => { 
-      console.log(1111111111111111111111); 
       console.log(err); 
       res.status(500).json({
         error: err
@@ -28,42 +28,24 @@ exports.storeCategory =(req, res, next) => {
   const content = req.body.content;
 
   const errors = validationResult(req);
-  // console.log(2);
+  
 
 if (!errors.isEmpty()) {
-  console.log(3);
   console.log(errors.array());
   return res.status(422).json({
     validationErrors: errors.array()
   });
-  // return res.status(422).render('admin/add-product', {
-  //   pageTitle:'Add Products',
-  //   path:"/admin/add-product",
-  //   editing: false,
-  //   hasError: true,
-  //   product: {
-  //     title: p_title,
-  //     price: p_price,
-  //     description: p_description
-  //   },
-  //   errorMessage: errors.array()[0].msg,
-  //   validationErrors: errors.array()
-  // });
 }
-
-
 
   const category = new Category({
     title:title,
     slug:slug,
-    // parent_id:parentId,
-    ...(parentId != "") && {parent_id: parentId},
+    ...(parentId != "") && {parentId: parentId},
     content:content,
   });
   
   category.save()
   .then(result => { 
-    console.log(result);
     res.status(201).json({
       message: 'Category created successfully!',
       category: result
@@ -85,10 +67,8 @@ exports.updateCategory =(req, res, next) => {
   const id = req.body.id;
 
   const errors = validationResult(req);
-  // console.log(2);
 
 if (!errors.isEmpty()) {
-  console.log(3);
   console.log(errors.array());
   return res.status(422).json({
     validationErrors: errors.array()
@@ -97,19 +77,18 @@ if (!errors.isEmpty()) {
 
   Category.findById(id)
     .then(category=>{
-      
       category.title=title;
       category.slug=slug;
       category.content=content;
       if (parentId != "") {
-      category.parent_id =parentId;
+      category.parentId =parentId;
       }
       return category.save()
     })
   .then(result => { 
-    console.log(result);
-    res.status(200).json({
-      message: 'done'
+    res.status(201).json({
+      message: 'Category Updated successfully!',
+      category: result
     });
   })
   .catch(err => {
@@ -125,7 +104,6 @@ exports.viewCategory =(req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(3);
     console.log(errors.array());
     return res.status(422).json({
       validationErrors: errors.array()
@@ -134,7 +112,6 @@ exports.viewCategory =(req, res, next) => {
 
   Category.findById(catId)
     .then(category=>{
-      
       res.status(200).json({
         category: category
       });
@@ -153,7 +130,6 @@ exports.deleteCategories =(req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(3);
     console.log(errors.array());
     return res.status(422).json({
       validationErrors: errors.array()
