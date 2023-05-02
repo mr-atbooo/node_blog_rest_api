@@ -13,6 +13,7 @@ exports.getPosts = (req, res, next) => {
       totalItems = count;
       return Post.find()
         .populate('categoryId','title')
+        .populate('tags','title')
         .skip((currentPage - 1) * perPage)
         .limit(perPage);
     })
@@ -54,6 +55,7 @@ exports.storePost =(req, res, next) => {
   const category = req.body.category;
   const excerpt = req.body.excerpt;
   const content = req.body.content;
+  const tags = req.body.tag;
 
   const img = req.file;
   console.log(img);
@@ -98,17 +100,16 @@ if (!errors.isEmpty()) {
      img :imgName,
      excerpt :excerpt,
      content:content,
+     tags:tags,
     ...(category != "") && {categoryId: category},
   });
   
   post.save()
   .then(post => { 
-   
     res.status(201).json({
       message: 'Post created successfully!',
       post: post
     });
-
 
   })
   .catch(err => {

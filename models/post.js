@@ -53,11 +53,7 @@ const postSchema = new Schema(
       type: String,
       required: true
     },
-    // creator: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'User',
-    //   required: true
-    // }
+    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
   },
   { timestamps: true }
 );
