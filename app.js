@@ -7,6 +7,7 @@ const errorsController = require('./controllers/errors');
 const categoryRoutes = require('./routes/category');
 const tagRoutes = require('./routes/tag');
 const postRoutes = require('./routes/post');
+const authRoutes = require('./routes/auth');
 
 
 const app = express();
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/categories',categoryRoutes);
 app.use('/tags',tagRoutes);
 app.use('/posts',postRoutes);
+app.use('/auth', authRoutes);
 
 
 app.use('/images', express.static(path.join(__dirname, 'images')));

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const postSchema = new Schema(
   {
@@ -26,21 +27,10 @@ const postSchema = new Schema(
       default: 0 
     },
     categoryId: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       ref: 'Category',
       required: true
     },
-    // catData: {
-    //   name: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   catId: {
-    //     type: Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'Category'
-    //   }
-    // },
     img: {
       type: String,
       required: true
@@ -53,7 +43,7 @@ const postSchema = new Schema(
       type: String,
       required: true
     },
-    tags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+    tags: [{ type: ObjectId, ref: 'Tag' }],
   },
   { timestamps: true }
 );

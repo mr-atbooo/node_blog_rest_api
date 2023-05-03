@@ -21,9 +21,7 @@ exports.getTags = (req, res, next) => {
 };
 
 exports.storeTag =(req, res, next) => {
-  const title = req.body.title;
-  const slug = req.body.slug;
-  const content = req.body.content;
+  const {title,slug,content} = req.body
 
   const errors = validationResult(req);
   
@@ -34,11 +32,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  const tag = new Tag({
-    title:title,
-    slug:slug,
-    content:content,
-  });
+  const tag = new Tag({title,slug,content});
   
   tag.save()
   .then(result => { 
