@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const Category = require('../models/category');
+const Post = require('../models/post');
 
 exports.getCategories = (req, res, next) => {
   
@@ -111,10 +112,49 @@ exports.viewCategory =(req, res, next) => {
   }
 
   Category.findById(catId)
+    .select('-createdAt -updatedAt -__v')
     .then(category=>{
+  
+      /******* st get posts *****************/
+      const currentPage = +req.query.page || 1;
+      const perPage = +req.query.size || 2;
+      let totalItems;
+      Post.find( { "categoryId": catId } )
+      .countDocuments()
+      .then(count => {
+      totalItems = count;
+        return Post.find( { "categoryId": catId } )
+          .populate('categoryId','title')
+          .populate('tags','title')
+          .skip((currentPage - 1) * perPage)
+          .limit(perPage);
+      })
+    .then(posts => {
       res.status(200).json({
-        category: category
+        message: 'Fetched category info with posts successfully.',
+        categoryInfo: category,
+        postsInfo: {
+          posts:posts,
+          pagination:{
+            totalItems: totalItems,
+            itemPerPage:perPage,
+            currentPage: currentPage,
+            hasNextPage: perPage * currentPage < totalItems,
+            hasPreviousPage: currentPage > 1,
+            nextPage: currentPage + 1,
+            previousPage: currentPage - 1,
+            lastPage: Math.ceil(totalItems / perPage)
+          }
+        },
+       
+        
       });
+    }
+    )
+      /******* nd get posts *****************/
+      // res.status(200).json({
+      //   category: category
+      // });
     })
  
   .catch(err => {

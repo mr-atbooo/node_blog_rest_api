@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 const Tag = require('../models/tag');
+const Post = require('../models/post');
 
 exports.getTags = (req, res, next) => {
   
@@ -97,10 +98,48 @@ exports.viewTag =(req, res, next) => {
   }
 
   Tag.findById(tagId)
+    .select('-createdAt -updatedAt')
     .then(tag=>{
+
+      /******* st get posts *****************/
+      const currentPage = +req.query.page || 1;
+      const perPage = +req.query.size || 2;
+      let totalItems;
+      // Post.find({'tags':{'$in':tagIds}})
+      Post.find( { "tags": tagId } )
+      // Post.find( { "courses.courseName": "Database Design" } )
+      .countDocuments()
+      .then(count => {
+      totalItems = count;
+        return Post.find( { "tags": tagId } )
+          .populate('categoryId','title')
+          .populate('tags','title')
+          .skip((currentPage - 1) * perPage)
+          .limit(perPage);
+      })
+    .then(posts => {
       res.status(200).json({
-        tag: tag
+        message: 'Fetched tag info with posts successfully.',
+        tagInfo: tag,
+        postsInfo: {
+          posts:posts,
+          pagination:{
+            totalItems: totalItems,
+            itemPerPage:perPage,
+            currentPage: currentPage,
+            hasNextPage: perPage * currentPage < totalItems,
+            hasPreviousPage: currentPage > 1,
+            nextPage: currentPage + 1,
+            previousPage: currentPage - 1,
+            lastPage: Math.ceil(totalItems / perPage)
+          }
+        },
+       
+        
       });
+    }
+    )
+      /******* nd get posts *****************/
     })
  
   .catch(err => {
@@ -110,6 +149,7 @@ exports.viewTag =(req, res, next) => {
     return next(error);
   });    
 };
+
 
 exports.deleteTags =(req, res, next) => {
   const tagIds = req.body.ids;
@@ -129,6 +169,23 @@ exports.deleteTags =(req, res, next) => {
       });
     })
  
+  .catch(err => {
+    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });    
+};
+
+exports.deleteAllTags =(req, res, next) => {
+
+
+  Tag.deleteMany({})
+    .then(tag=>{
+      res.status(200).json({
+        message: "All Tags deleted successffly"
+      });
+    })
   .catch(err => {
     console.log(err);
     const error = new Error(err);

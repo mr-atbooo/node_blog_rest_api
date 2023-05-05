@@ -3,6 +3,7 @@ const multer = require('multer');
 
 const postController = require('../controllers/post');
 const Post = require('../models/post');
+const isAuth = require('../middleware/is-auth');
 
 const { check, body } = require('express-validator');
 const router = express.Router();
@@ -48,6 +49,7 @@ router.post('/store'
      fileFilter: fileFilter 
     }
     ).single('image'),
+    isAuth,
     [
       body('title',"title is not valid")
       .notEmpty().withMessage("title is required")
@@ -87,6 +89,7 @@ router.put('/update'
      fileFilter: fileFilter 
     }
     ).single('image'),
+    isAuth,
     [
       body('id',"id is not valid")
     .notEmpty().withMessage("id is required")
@@ -113,8 +116,8 @@ router.put('/update'
   ], postController.updatePost);
 //nd update post
 
-//st delete category
-router.delete('/delete',
+//st delete post
+router.delete('/delete',isAuth,
 [
   body('ids',"ids is not valid")
   .notEmpty().withMessage("ids is required")
@@ -128,11 +131,22 @@ router.delete('/delete',
               'id is not valid.'
           );
         }
+        if (chPost.creator) {
+          const error = new Error('Not authorized!');
+          error.statusCode = 403;
+          throw error;
+
+          if (chPost.creator.toString() !== req.userId) {
+            const error = new Error('Not authorized!');
+            error.statusCode = 403;
+            throw error;
+          }
+        }
       });
     }),
 ],
 postController.deletePosts);
-//nd delete category
+//nd delete post
 
 
 

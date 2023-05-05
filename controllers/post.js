@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator');
 const Post = require('../models/post');
 const Category = require('../models/category');
+const User = require('../models/user');
+
 const fileHelper = require('../util/file');
 
 exports.getPosts = (req, res, next) => {
@@ -56,6 +58,7 @@ exports.storePost =(req, res, next) => {
   const excerpt = req.body.excerpt;
   const content = req.body.content;
   const tags = req.body.tag;
+  let creator;
 
   const img = req.file;
   console.log(img);
@@ -92,6 +95,7 @@ if (!errors.isEmpty()) {
 
 
   const post = new Post({
+    creator: req.userId,
      title :title,
      publish :publish,
      publishAt :publishAt,
@@ -105,12 +109,20 @@ if (!errors.isEmpty()) {
   });
   
   post.save()
-  .then(post => { 
+  .then(result => {
+    return User.findById(req.userId);
+  })
+  .then(user => {
+    creator = user;
+    user.posts.push(post);
+    return user.save();
+  })
+  .then(result => {
     res.status(201).json({
       message: 'Post created successfully!',
-      post: post
+      post: post,
+      creator: { _id: creator._id, name: creator.name }
     });
-
   })
   .catch(err => {
     console.log(err);

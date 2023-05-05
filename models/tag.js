@@ -6,12 +6,12 @@ const Schema = mongoose.Schema;
 const tagSchema = new Schema({
   title: {
     type: String,
-    required: true,
+    required: [true, 'Please provide Tag name'],
     unique: true
   },
   slug: {
     type: String,
-    required: true,
+    required: [true, 'Please provide Tag slug'],
     unique: true
   },
   content: {

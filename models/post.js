@@ -29,6 +29,11 @@ const postSchema = new Schema(
     categoryId: {
       type: ObjectId,
       ref: 'Category',
+      required: false
+    },
+    creator: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true
     },
     img: {

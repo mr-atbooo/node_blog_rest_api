@@ -1,13 +1,15 @@
 const express = require('express');
 
 const tagController = require('../controllers/tag');
+const isAuth = require('../middleware/is-auth');
+
 const Tag = require('../models/tag');
 const router = express.Router();
 const { check, body } = require('express-validator');
 
 router.get('/', tagController.getTags);
 // st store tag
-router.post('/store',
+router.post('/store',isAuth,
 [
     body('title',"title is not valid")
     .notEmpty().withMessage("title is required")
@@ -42,7 +44,7 @@ tagController.storeTag);
 // nd store tag
 
 // st update tag
-router.post('/update',
+router.post('/update',isAuth,
 [
     body('id',"id is not valid")
     .notEmpty().withMessage("id is required")
@@ -105,8 +107,8 @@ router.get('/show',[
 ],tagController.viewTag);
 // nd show tag
 
-//st delete category
-router.post('/delete',
+//st delete tag
+router.post('/delete',isAuth,
 [
   body('ids',"ids is not valid")
   .notEmpty().withMessage("ids is required")
@@ -123,6 +125,12 @@ router.post('/delete',
     }),
 ],
 tagController.deleteTags);
-//nd delete category 
+//nd delete tag 
+
+//st delete all tags
+router.post('/delete-all',isAuth,tagController.deleteAllTags);
+//nd delete all tags
+
+
 
 module.exports = router;

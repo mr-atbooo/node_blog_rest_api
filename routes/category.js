@@ -2,12 +2,14 @@ const express = require('express');
 
 const categoryController = require('../controllers/category');
 const Category = require('../models/category');
+const isAuth = require('../middleware/is-auth');
+
 const router = express.Router();
 const { check, body } = require('express-validator');
 
 router.get('/', categoryController.getCategories);
 // st store category
-router.post('/store',
+router.post('/store',isAuth,
 [
     body('title',"title is not valid")
     .notEmpty().withMessage("title is required")
@@ -55,7 +57,7 @@ categoryController.storeCategory);
 // nd store category
 
 // st update category
-router.post('/update',
+router.post('/update',isAuth,
 [
     body('id',"id is not valid")
     .notEmpty().withMessage("id is required")
@@ -151,7 +153,7 @@ router.get('/show',[
 // nd show category
 
 //st delete category
-router.post('/delete',
+router.post('/delete',isAuth,
 [
   body('ids',"ids is not valid")
   .notEmpty().withMessage("ids is required")
