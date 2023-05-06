@@ -1,0 +1,810 @@
+{
+	"info": {
+		"_postman_id": "7db49222-04c2-4af2-b3e6-74c9c17e7b40",
+		"name": "node_blog_rest_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "tag",
+			"item": [
+				{
+					"name": "Tags List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/tags",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "tag2",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "slug",
+									"value": "tag2",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "bjkgfyujfyfy",
+									"description": "optional ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/tags/store",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tags",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag Update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "tag_1",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "slug",
+									"value": "tag_1",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "bjkgfyujfyfy",
+									"description": "optional ",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "6454e93b0fe6e8d42c56bcde",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/tags/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tags",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tag show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/tags/show?id=6454f19c286213297aac0a38",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tags",
+								"show"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6454e93b0fe6e8d42c56bcde",
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "6454f19c286213297aac0a38"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tags Delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ids[]",
+									"value": "64493c0d5d6d9b6083c5b42a",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "64493ee2dc07af7bfe03cabf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "6450173a34d91aad4406b483",
+									"type": "text"
+								},
+								{
+									"key": "ids[]",
+									"value": "6449869b50c551e221c7a590",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/tags/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tags",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Tags Delete All",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{baseURL}}/tags/delete-all",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"tags",
+								"delete-all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "Categories List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "cat_111",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "slug",
+									"value": "cat_111",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "parent_id",
+									"value": "644fe7baaa5e703344b1933f",
+									"description": "optional - category id",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "bjkgfyujfyfy",
+									"description": "optional ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/categories/store",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "cat22223",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "slug",
+									"value": "cat332145",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "parent_id",
+									"value": "644ff5c3b16b10bfc49b9a82",
+									"description": "optional - category id",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "bjkgfyujfyfy",
+									"description": "optional ",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "644ff72ca0e5a5656a0f688f",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/categories/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categories/show?id=644fe751479a7e33378119bd",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories",
+								"show"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "644fe751479a7e33378119bd"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categories Delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ids[]",
+									"value": "64493c0d5d6d9b6083c5b42a",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "64493ee2dc07af7bfe03cabf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "644fe7baaa5e703344b1933f",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "6449869b50c551e221c7a590",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/categories/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categories",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"item": [
+				{
+					"name": "Posts List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/posts?page=1&size=50",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "post 1",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "required",
+									"type": "file",
+									"src": "/C:/Users/mabde/OneDrive/Desktop/037bda15-955d-4a88-9c28-afc713ed48d7.jpeg"
+								},
+								{
+									"key": "content",
+									"value": "222222222222222",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "644fe751479a7e33378119bd",
+									"type": "text"
+								},
+								{
+									"key": "publish",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tag[]",
+									"value": "6454e93b0fe6e8d42c56bcde",
+									"type": "default",
+									"disabled": true
+								},
+								{
+									"key": "tag[]",
+									"value": "6454e9f50fe6e8d42c56bcee",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/posts/store",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"posts",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "666666666666666",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "required",
+									"type": "file",
+									"src": "134.jpg"
+								},
+								{
+									"key": "content",
+									"value": "222222222222222",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "644a5ff69a6586edc0a4aaca",
+									"type": "text"
+								},
+								{
+									"key": "publish",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "644ed9df88865219a3b4b9ce",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/posts/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"posts",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Posts show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/posts/show/644ed99c7a61d7e84e32da30",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"posts",
+								"show",
+								"644ed99c7a61d7e84e32da30"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ids[]",
+									"value": "64493c0d5d6d9b6083c5b42a",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "64493ee2dc07af7bfe03cabf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "64502467c56355d6b06d9288",
+									"type": "text"
+								},
+								{
+									"key": "ids[]",
+									"value": "644d69cfc440e2c5b1c94207",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/posts/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"posts",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "b@a.com",
+									"description": "required-email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "atbooo",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();\r",
+									"pm.environment.set(\"token\", data.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "a@a.com",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
