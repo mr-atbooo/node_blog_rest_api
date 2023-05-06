@@ -4,7 +4,7 @@
 
 - [x] Built with **CRUD** function (:rocket:Optimized Coding Styles)
 - [x] User can sign up and login. (:lock:)
-- [x] User management - CRUD operations. (:heavy_plus_sign:)
+- [x] User management - CRUD operations. (Soon will update it! :pushpin:)
 - [x] Category management - CRUD operations. (:heavy_plus_sign:)
 - [x] Tag management - CRUD operations. (:heavy_plus_sign:)
 - [x] Post management - CRUD operations. (:heavy_plus_sign:)
