@@ -13,7 +13,7 @@
 - [x] User can be able to upload their own profile. (:package:)
 - [x] You can integrate with any kind of **front-end** website. (:recycle:)
 - [x] JWT WebToken (:heavy_plus_sign:)
-- [x] one to one & one to many and many to many relationship. (:heavy_plus_sign:)
+- [x] one to one & one to many and many to many relationship. (🔗)
 
 ## Technologies
 - Node
