@@ -4,12 +4,15 @@
 
 - [x] Built with **CRUD** function (:rocket:Optimized Coding Styles)
 - [x] User can sign up and login. (:lock:)
-- [x] User can create many categories. (:heavy_plus_sign:)
-- [x] User can create many tags. (:heavy_plus_sign:)
-- [x] User can create their own posts. (:heavy_plus_sign:)
+- [x] User management - CRUD operations. (:heavy_plus_sign:)
+- [x] Category management - CRUD operations. (:heavy_plus_sign:)
+- [x] Tag management - CRUD operations. (:heavy_plus_sign:)
+- [x] Post management - CRUD operations. (:heavy_plus_sign:)
+- [x] Page management - CRUD operations. (Soon will update it! :pushpin:)
+- [x] Comment management - CRUD operations. (Soon will update it! :pushpin:)
 - [x] User can be able to upload their own profile. (:package:)
 - [x] You can integrate with any kind of **front-end** website. (:recycle:)
-- [x] JWT WebToken (Soon will update it! :pushpin:)
+- [x] JWT WebToken (:heavy_plus_sign:)
 
 ## Tecnologias
 - Node
