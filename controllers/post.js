@@ -79,7 +79,11 @@ exports.storePost =(req, res, next) => {
   const errors = validationResult(req);
 
 if (!errors.isEmpty()) {
-  console.log(3);
+  const chImg = req.file;
+    if (chImg) {
+      fileHelper.deleteFile('images/'+ chImg.filename);
+    }
+
   console.log(errors.array());
   return res.status(422).json({
     validationErrors: errors.array()

@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const fileHelper = require('../util/file');
 
 exports.signup = (req, res, next) => {
   const errors = validationResult(req);
@@ -83,3 +84,70 @@ exports.login = (req, res, next) => {
     });
 };
 
+exports.updateProfile =(req, res, next) => {
+  const id = req.userId;
+  const {name,email,fristName,lastName,website} = req.body
+  const password = req.body.password;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(3);
+    console.log(errors.array());
+    return res.status(422).json({
+      validationErrors: errors.array()
+    });
+  }
+
+const img = req.file;
+bcrypt
+    .hash(password, 12)
+    .then(hashedPw => {
+      User.findById(id)
+      .then(user=>{
+        user.name = name;
+        user.email = email;
+        user.fristName = fristName;
+        user.lastName = lastName;
+        user.website = website;
+        user.password = hashedPw;
+        
+        if (img) {
+        
+          fileHelper.deleteFile('images/'+user.avatar);
+          user.avatar = img.filename;
+        }
+        return user.save()
+      })
+    })
+  .then(result => { 
+    res.status(200).json({
+      message: 'Profile Data updated successfully!',
+      post: result
+    });
+  })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+  });
+
+ 
+
+};
+
+exports.profile =(req, res, next) => {
+  User.findById(req.userId)
+  .populate('posts','title')
+  .then(user=>{
+      res.status(200).json({
+        user: user,
+      });
+  })
+  .catch(err => {
+    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });    
+};

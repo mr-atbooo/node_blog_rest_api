@@ -714,20 +714,65 @@
 			]
 		},
 		{
-			"name": "auth",
+			"name": "user",
 			"item": [
 				{
-					"name": "signup",
+					"name": "Users List",
 					"request": {
-						"method": "PUT",
-						"header": [],
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/users?page=1&size=50",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "mohammed",
+									"description": "required",
+									"type": "text"
+								},
 								{
 									"key": "email",
-									"value": "b@a.com",
-									"description": "required-email",
+									"value": "x1@a.com",
+									"description": "required",
 									"type": "text"
 								},
 								{
@@ -737,26 +782,244 @@
 									"type": "text"
 								},
 								{
-									"key": "name",
-									"value": "atbooo",
-									"description": "required",
+									"key": "fristName",
+									"value": "mo",
+									"description": "optional",
 									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "atbooo",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "95954",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "user",
+									"description": "optional",
+									"type": "default"
+								},
+								{
+									"key": "status",
+									"value": "new",
+									"description": "optional",
+									"type": "default"
+								},
+								{
+									"key": "avatar",
+									"description": "optional",
+									"type": "file",
+									"src": "/C:/Users/mabde/OneDrive/Desktop/44.jpg"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{baseURL}}/auth/signup",
+							"raw": "{{baseURL}}/users/store",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
-								"auth",
-								"signup"
+								"users",
+								"store"
 							]
 						}
 					},
 					"response": []
 				},
+				{
+					"name": "Users Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "645745b0f64b4ad0bda277df",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "mohammed",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "a12@a.com",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "fristName",
+									"value": "mo1",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "atbooo1",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "959541",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "user",
+									"description": "optional",
+									"type": "default"
+								},
+								{
+									"key": "status",
+									"value": "new",
+									"description": "optional",
+									"type": "default"
+								},
+								{
+									"key": "avatar",
+									"description": "optional",
+									"type": "file",
+									"src": "/C:/Users/mabde/OneDrive/Desktop/6284a4da1ce6d76d83c28d1372934bd1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users show",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/users/show/6451649e8a87f7a1ac5a4f46",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"show",
+								"6451649e8a87f7a1ac5a4f46"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645745b0f64b4ad0bda277df",
+									"disabled": true
+								},
+								{
+									"key": null,
+									"value": "6451649e8a87f7a1ac5a4f46",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Users Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ids[]",
+									"value": "64493c0d5d6d9b6083c5b42a",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "64493ee2dc07af7bfe03cabf",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "6457f6b49e68a7bb8d89aa31",
+									"type": "text"
+								},
+								{
+									"key": "ids[]",
+									"value": "644d69cfc440e2c5b1c94207",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/users/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"users",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
 				{
 					"name": "Login",
 					"event": [
@@ -799,6 +1062,143 @@
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "b@a.com",
+									"description": "required-email",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "atbooo",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/signup",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "mohammed",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "a@a.com",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "fristName",
+									"value": "mo2",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "atbooo2",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "website",
+									"value": "959542",
+									"description": "optional",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"description": "optional",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/auth/profile/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"profile",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/auth/profile",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"auth",
+								"profile"
 							]
 						}
 					},
