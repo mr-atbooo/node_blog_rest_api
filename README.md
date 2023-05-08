@@ -4,15 +4,15 @@
 
 - [x] Built with **CRUD** function (:rocket:Optimized Coding Styles)
 - [x] User can sign up and login. (:lock:)
-- [x] User management - CRUD operations. (:heavy_plus_sign:)
+- [x] User management - CRUD operations. (Soon will update it! :pushpin:)
 - [x] Category management - CRUD operations. (:heavy_plus_sign:)
 - [x] Tag management - CRUD operations. (:heavy_plus_sign:)
 - [x] Post management - CRUD operations. (:heavy_plus_sign:)
 - [x] Page management - CRUD operations. (Soon will update it! :pushpin:)
 - [x] Comment management - CRUD operations. (Soon will update it! :pushpin:)
-- [x] User can be able to upload their own profile. (:package:)
+- [x] User can be able to upload their own profile. (Soon will update it! :pushpin:)
 - [x] You can integrate with any kind of **front-end** website. (:recycle:)
-- [x] JWT WebToken (:heavy_plus_sign:)
+- [x] JWT WebToken (:package:)
 - [x] one to one & one to many and many to many relationship. (🔗)
 
 ## Technologies
