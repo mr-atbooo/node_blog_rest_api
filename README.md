@@ -8,7 +8,7 @@
 - [x] Category management - CRUD operations. (:heavy_plus_sign:)
 - [x] Tag management - CRUD operations. (:heavy_plus_sign:)
 - [x] Post management - CRUD operations. (:heavy_plus_sign:)
-- [x] Page management - CRUD operations. (Soon will update it! :pushpin:)
+- [x] Page management - CRUD operations. (:heavy_plus_sign:)
 - [x] Comment management - CRUD operations. (Soon will update it! :pushpin:)
 - [x] User can be able to upload their own profile. (:heavy_plus_sign:)
 - [x] You can integrate with any kind of **front-end** website. (:recycle:)
