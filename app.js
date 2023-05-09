@@ -7,6 +7,7 @@ const errorsController = require('./controllers/errors');
 const categoryRoutes = require('./routes/category');
 const tagRoutes = require('./routes/tag');
 const postRoutes = require('./routes/post');
+const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 app.use('/categories',categoryRoutes);
 app.use('/tags',tagRoutes);
 app.use('/posts',postRoutes);
+app.use('/pages',pageRoutes);
 app.use('/users', userRoutes);
 app.use('/auth', authRoutes);
 

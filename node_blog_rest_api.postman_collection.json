@@ -714,6 +714,213 @@
 			]
 		},
 		{
+			"name": "page",
+			"item": [
+				{
+					"name": "Pages List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pages?page=1&size=50",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pages"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Page Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "page 2",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "required",
+									"type": "file",
+									"src": "/C:/Users/mabde/OneDrive/Desktop/134.jpg"
+								},
+								{
+									"key": "content",
+									"value": "222222222222222",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "publish",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/pages/store",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pages",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Page update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "page 22",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "required",
+									"type": "file",
+									"src": "134.jpg"
+								},
+								{
+									"key": "content",
+									"value": "111",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "publish",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "6459e66c59295e17fda9de0e",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/pages/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pages",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Page show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/pages/show/6459e66c59295e17fda9de0e",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pages",
+								"show",
+								"6459e66c59295e17fda9de0e"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pages Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ids[]",
+									"value": "64502467c56355d6b06d9288",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "ids[]",
+									"value": "6459ed06bf4275e87834c709",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/pages/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"pages",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "user",
 			"item": [
 				{
