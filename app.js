@@ -7,6 +7,7 @@ const errorsController = require('./controllers/errors');
 const categoryRoutes = require('./routes/category');
 const tagRoutes = require('./routes/tag');
 const postRoutes = require('./routes/post');
+const commentRoutes = require('./routes/comment');
 const pageRoutes = require('./routes/page');
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
@@ -27,12 +28,13 @@ app.use((req, res, next) => {
 });
 
 
-app.use('/categories',categoryRoutes);
-app.use('/tags',tagRoutes);
-app.use('/posts',postRoutes);
-app.use('/pages',pageRoutes);
-app.use('/users', userRoutes);
-app.use('/auth', authRoutes);
+app.use('/api/v1/categories',categoryRoutes);
+app.use('/api/v1/tags',tagRoutes);
+app.use('/api/v1/posts',postRoutes);
+app.use('/api/v1/comments',commentRoutes);
+app.use('/api/v1/pages',pageRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 
 app.use('/images', express.static(path.join(__dirname, 'images')));

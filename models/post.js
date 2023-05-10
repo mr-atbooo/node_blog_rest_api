@@ -49,6 +49,7 @@ const postSchema = new Schema(
       required: true
     },
     tags: [{ type: ObjectId, ref: 'Tag' }],
+    comments: [{type:ObjectId,ref: 'Comment'}]
   },
   { timestamps: true }
 );

@@ -224,7 +224,9 @@ exports.viewPost =(req, res, next) => {
   }
 
   Post.findById(catId)
-  .populate('categoryId','title')
+    .populate('categoryId','title')
+    .populate('tags','title')
+    .populate('comments','text')
     .then(post=>{
       // return Category.findById(post.categoryId)
       // .then(category=>{
