@@ -1,10 +1,10 @@
 const { validationResult } = require('express-validator');
-const Category = require('../models/category');
-const Post = require('../models/post');
+const CategoryController = require('../../models/categoryModel');
+const Post = require('../../models/postModel');
 
 exports.getCategories = (req, res, next) => {
   
-  Category.find()
+  CategoryController.find()
   .populate('parentId','title')
     .then(categories => {
       res.status(200).json({
@@ -38,7 +38,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  const category = new Category({
+  const category = new CategoryController({
     title:title,
     slug:slug,
     ...(parentId != "") && {parentId: parentId},
@@ -48,7 +48,7 @@ if (!errors.isEmpty()) {
   category.save()
   .then(result => { 
     res.status(201).json({
-      message: 'Category created successfully!',
+      message: 'CategoryController created successfully!',
       category: result
     });
   })
@@ -76,7 +76,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  Category.findById(id)
+  CategoryController.findById(id)
     .then(category=>{
       category.title=title;
       category.slug=slug;
@@ -88,7 +88,7 @@ if (!errors.isEmpty()) {
     })
   .then(result => { 
     res.status(201).json({
-      message: 'Category Updated successfully!',
+      message: 'CategoryController Updated successfully!',
       category: result
     });
   })
@@ -111,7 +111,7 @@ exports.viewCategory =(req, res, next) => {
     });
   }
 
-  Category.findById(catId)
+  CategoryController.findById(catId)
     .select('-createdAt -updatedAt -__v')
     .then(category=>{
   
@@ -176,7 +176,7 @@ exports.deleteCategories =(req, res, next) => {
     });
   }
 
-  Category.deleteMany({'_id':{'$in':catIds}})
+  CategoryController.deleteMany({'_id':{'$in':catIds}})
     .then(category=>{
       res.status(200).json({
         message: "Categories deleted successffly"

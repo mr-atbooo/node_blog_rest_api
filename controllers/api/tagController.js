@@ -1,10 +1,10 @@
 const { validationResult } = require('express-validator');
-const Tag = require('../models/tag');
-const Post = require('../models/post');
+const TagController = require('../../models/tagModel');
+const Post = require('../../models/postModel');
 
 exports.getTags = (req, res, next) => {
   
-  Tag.find()
+  TagController.find()
     .then(tags => {
       res.status(200).json({
         tags: tags
@@ -33,12 +33,12 @@ if (!errors.isEmpty()) {
   });
 }
 
-  const tag = new Tag({title,slug,content});
+  const tag = new TagController({title,slug,content});
   
   tag.save()
   .then(result => { 
     res.status(201).json({
-      message: 'Tag created successfully!',
+      message: 'TagController created successfully!',
       tag: result
     });
   })
@@ -65,7 +65,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  Tag.findById(id)
+  TagController.findById(id)
     .then(tag=>{
       tag.title=title;
       tag.slug=slug;
@@ -97,7 +97,7 @@ exports.viewTag =(req, res, next) => {
     });
   }
 
-  Tag.findById(tagId)
+  TagController.findById(tagId)
     .select('-createdAt -updatedAt')
     .then(tag=>{
 
@@ -162,7 +162,7 @@ exports.deleteTags =(req, res, next) => {
     });
   }
 
-  Tag.deleteMany({'_id':{'$in':tagIds}})
+  TagController.deleteMany({'_id':{'$in':tagIds}})
     .then(tag=>{
       res.status(200).json({
         message: "Tags deleted successffly"
@@ -180,7 +180,7 @@ exports.deleteTags =(req, res, next) => {
 exports.deleteAllTags =(req, res, next) => {
 
 
-  Tag.deleteMany({})
+  TagController.deleteMany({})
     .then(tag=>{
       res.status(200).json({
         message: "All Tags deleted successffly"

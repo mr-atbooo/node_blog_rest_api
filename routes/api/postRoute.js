@@ -1,12 +1,14 @@
 const express = require('express');
 const multer = require('multer');
 
-const pageController = require('../controllers/page');
-const Page = require('../models/page');
-const isAuth = require('../middleware/is-auth');
+const postController = require('../../controllers/api/postController');
+const PostRoute = require('../../models/postModel');
+const isAuth = require('../../middleware/api/is-auth');
 
 const { check, body } = require('express-validator');
 const router = express.Router();
+
+
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -36,10 +38,10 @@ const fileStorage = multer.diskStorage({
   };
 
 
-//Get /feed/pages
-router.get('/', pageController.getPages);
+//Get /feed/posts
+router.get('/', postController.getPosts);
 
-//st store page
+//st store post
 router.post('/store'
     ,multer(
     { 
@@ -59,27 +61,27 @@ router.post('/store'
 
       
       
-  ], pageController.storePage);
-//nd store page
+  ], postController.storePost);
+//nd store post
 
-// st show page
-router.get('/show/:pageId',[
-  check('pageId',"id is not valid")
+// st show post
+router.get('/show/:postId',[
+  check('postId',"id is not valid")
   .notEmpty().withMessage("id is required")
   .isMongoId().withMessage("id is Not ObjectId")
   .custom((value, { req }) => {
-      return Page.findById(value).then(chPage => {
-        if (!chPage) {
+      return PostRoute.findById(value).then(chPost => {
+        if (!chPost) {
           return Promise.reject(
               'id is not valid.'
           );
         }
       });
     }),
-],pageController.viewPage);
-// nd show page
+],postController.viewPost);
+// nd show post
 
-//st update page
+//st update post
 router.put('/update'
     ,multer(
     { 
@@ -93,8 +95,8 @@ router.put('/update'
     .notEmpty().withMessage("id is required")
     .isMongoId().withMessage("id is Not ObjectId")
     .custom((value, { req }) => {
-        return Page.findById(value ).then(chPage => {
-          if (!chPage) {
+        return PostRoute.findById(value ).then(postCat => {
+          if (!postCat) {
             return Promise.reject(
               'id is not valid.'
             );
@@ -105,11 +107,16 @@ router.put('/update'
       .notEmpty().withMessage("title is required")
       .isString().withMessage("title must be string")
       .isLength({ min: 3 }).withMessage("title must be 3 length at minimum and 20 at maximum")
-      .trim(),  
-  ], pageController.updatePage);
-//nd update page
+      .trim(),
+      // body('publish',"publish is not valid")
+      // .isNumeric().withMessage("publish must be Numeric Value"),
 
-//st delete page
+      
+      
+  ], postController.updatePost);
+//nd update post
+
+//st delete post
 router.delete('/delete',isAuth,
 [
   body('ids',"ids is not valid")
@@ -118,18 +125,28 @@ router.delete('/delete',isAuth,
   ,
   body('ids.*', 'ids is Not ObjectId').isMongoId()
   .custom((value, { req }) => {
-      return Page.findById(value).then(chPage => {
-        if (!chPage) {
+      return PostRoute.findById(value).then(chPost => {
+        if (!chPost) {
           return Promise.reject(
               'id is not valid.'
           );
         }
-        
+        if (chPost.creator) {
+          const error = new Error('Not authorized!');
+          error.statusCode = 403;
+          throw error;
+
+          if (chPost.creator.toString() !== req.userId) {
+            const error = new Error('Not authorized!');
+            error.statusCode = 403;
+            throw error;
+          }
+        }
       });
     }),
 ],
-pageController.deletePages);
-//nd delete page
+postController.deletePosts);
+//nd delete post
 
 
 

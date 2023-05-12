@@ -1,16 +1,16 @@
 const express = require('express');
 
-const commentController = require('../controllers/comment');
-const Comment = require('../models/comment');
-const Post = require('../models/post');
-const isAuth = require('../middleware/is-auth');
+const commentController = require('../../controllers/api/commentController');
+const CommentRoute = require('../../models/commentModel');
+const Post = require('../../models/postModel');
+const isAuth = require('../../middleware/api/is-auth');
 
 const router = express.Router();
 const { check, body } = require('express-validator');
 
 router.get('/', commentController.getComments);
 
-// st store Comment
+// st store CommentRoute
 router.post('/store',isAuth,
 [
     body('text',"text is not valid")
@@ -30,16 +30,16 @@ router.post('/store',isAuth,
       }),
 ],
 commentController.storeComment);
-// nd store Comment
+// nd store CommentRoute
 
-// st update Comment
+// st update CommentRoute
 router.post('/update',isAuth,
 [
     body('id',"id is not valid")
     .notEmpty().withMessage("id is required")
     .isMongoId().withMessage("id is Not ObjectId")
     .custom((value, { req }) => {
-        return Comment.findById(value ).then(chCom => {
+        return CommentRoute.findById(value ).then(chCom => {
           if (!chCom) {
             return Promise.reject(
               'id is not valid.'
@@ -54,15 +54,15 @@ router.post('/update',isAuth,
     .trim(),
 ],
 commentController.updateComment);
-// nd update Comment
+// nd update CommentRoute
 
-// st show Comment
+// st show CommentRoute
 router.get('/show',[
     check('id',"id is not valid")
     .notEmpty().withMessage("id is required")
     .isMongoId().withMessage("id is Not ObjectId")
     .custom((value, { req }) => {
-        return Comment.findById(value).then(chComment => {
+        return CommentRoute.findById(value).then(chComment => {
           if (!chComment) {
             return Promise.reject(
                 'id is not valid.'
@@ -71,9 +71,9 @@ router.get('/show',[
         });
       }),
 ],commentController.viewComment);
-// nd show Comment
+// nd show CommentRoute
 
-//st delete Comment
+//st delete CommentRoute
 router.post('/delete',isAuth,
 [
   body('ids',"ids is not valid")
@@ -81,7 +81,7 @@ router.post('/delete',isAuth,
   .isArray().withMessage('ids must be an array '),
   body('ids.*', 'ids is Not ObjectId').isMongoId()
   .custom((value, { req }) => {
-      return Comment.findById(value).then(chComment => {
+      return CommentRoute.findById(value).then(chComment => {
         if (!chComment) {
           return Promise.reject(
               'comment is not valid.'
@@ -91,6 +91,6 @@ router.post('/delete',isAuth,
     }),
 ],
 commentController.deleteComments);
-//nd delete Comment 
+//nd delete CommentRoute
 
 module.exports = router;

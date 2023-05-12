@@ -1,19 +1,19 @@
 const { validationResult } = require('express-validator');
-const Post = require('../models/post');
-const Category = require('../models/category');
-const User = require('../models/user');
+const PostController = require('../../models/postModel');
+const Category = require('../../models/categoryModel');
+const User = require('../../models/userModel');
 
-const fileHelper = require('../util/file');
+const fileHelper = require('../../util/file');
 
 exports.getPosts = (req, res, next) => {
   const currentPage = +req.query.page || 1;
   const perPage = +req.query.size || 2;
   let totalItems;
-  Post.find()
+  PostController.find()
     .countDocuments()
     .then(count => {
       totalItems = count;
-      return Post.find()
+      return PostController.find()
         .populate('categoryId','title')
         .populate('tags','title')
         .skip((currentPage - 1) * perPage)
@@ -98,7 +98,7 @@ if (!errors.isEmpty()) {
 
 
 
-  const post = new Post({
+  const post = new PostController({
     creator: req.userId,
      title :title,
      publish :publish,
@@ -123,7 +123,7 @@ if (!errors.isEmpty()) {
   })
   .then(result => {
     res.status(201).json({
-      message: 'Post created successfully!',
+      message: 'PostController created successfully!',
       post: post,
       creator: { _id: creator._id, name: creator.name }
     });
@@ -174,7 +174,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  Post.findById(id)
+  PostController.findById(id)
     .then(post=>{
       post.title = title;
       post.publish = publish;
@@ -199,7 +199,7 @@ if (!errors.isEmpty()) {
   .then(result => { 
     console.log(result);
     res.status(200).json({
-      message: 'Post updated successfully!',
+      message: 'PostController updated successfully!',
       post: result
     });
   })
@@ -223,7 +223,7 @@ exports.viewPost =(req, res, next) => {
     });
   }
 
-  Post.findById(catId)
+  PostController.findById(catId)
     .populate('categoryId','title')
     .populate('tags','title')
     .populate('comments','text')
@@ -265,14 +265,14 @@ exports.deletePosts =(req, res, next) => {
     });
   }
 
-  Post.find({'_id':{'$in':postIds}})
+  PostController.find({'_id':{'$in':postIds}})
   .select('title img ')
     .then(posts=>{
       posts.forEach(element => {
         fileHelper.deleteFile('images/'+element.img);
       });
 
-      Post.deleteMany({'_id':{'$in':postIds}})
+      PostController.deleteMany({'_id':{'$in':postIds}})
       .then(category=>{
         res.status(200).json({
           message: "Posts deleted successffly"

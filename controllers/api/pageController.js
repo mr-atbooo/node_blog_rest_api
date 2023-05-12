@@ -1,14 +1,14 @@
 const { validationResult } = require('express-validator');
-const Page = require('../models/page');
+const PageController = require('../../models/pageModel');
 
-const fileHelper = require('../util/file');
+const fileHelper = require('../../util/file');
 
 exports.getPages = async(req, res, next) => {
   const currentPage = +req.query.page || 1;
   const perPage = +req.query.size || 2;
   try{
-    const totalItems = await Page.find().countDocuments();
-    const pages = await Page.find().skip((currentPage - 1) * perPage).limit(perPage);
+    const totalItems = await PageController.find().countDocuments();
+    const pages = await PageController.find().skip((currentPage - 1) * perPage).limit(perPage);
     res.status(200).json({
           message: 'Fetched pages successfully.',
           pages: pages,
@@ -79,7 +79,7 @@ if (!errors.isEmpty()) {
 
 try
 {
-    const pageObj = new Page({
+    const pageObj = new PageController({
       title :title,
       publish :publish,
       publishAt :publishAt,
@@ -89,7 +89,7 @@ try
  
  const page = await pageObj.save();
    res.status(201).json({
-     message: 'Page created successfully!',
+     message: 'PageController created successfully!',
      page: page,
    });
 }
@@ -118,7 +118,7 @@ if (!errors.isEmpty()) {
 }
 
 try{
-  const page = await Page.findById(id);
+  const page = await PageController.findById(id);
     page.title = title;
     page.publish = publish;
     page.publishAt = publishAt;
@@ -158,7 +158,7 @@ exports.viewPage = async (req, res, next) => {
 
   try
   {
-    const page =  await Page.findById(pageId);
+    const page =  await PageController.findById(pageId);
     res.status(200).json({
       page: page,
     }); 
@@ -186,14 +186,14 @@ exports.deletePages = async (req, res, next) => {
 
   try
   {
-    const pages = await Page.find({'_id':{'$in':pageIds}}).select('title img ');
+    const pages = await PageController.find({'_id':{'$in':pageIds}}).select('title img ');
     const pagesDelete = pages.forEach(element => {
       fileHelper.deleteFile('images/'+element.img);
     })
 
-    const pagesToDelete = await Page.deleteMany({'_id':{'$in':pageIds}});
+    const pagesToDelete = await PageController.deleteMany({'_id':{'$in':pageIds}});
     res.status(200).json({
-      message: "Page deleted successffly"
+      message: "PageController deleted successffly"
     });
 
   }

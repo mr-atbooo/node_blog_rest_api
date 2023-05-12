@@ -1,18 +1,18 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const User = require('../models/user');
+const UserController = require('../../models/userModel');
 
-const fileHelper = require('../util/file');
+const fileHelper = require('../../util/file');
 
 exports.getUsers = (req, res, next) => {
   const currentPage = +req.query.page || 1;
   const perPage = +req.query.size || 2;
   let totalItems;
-  User.find()
+  UserController.find()
     .countDocuments()
     .then(count => {
       totalItems = count;
-      return User.find()
+      return UserController.find()
         .select('-posts -password')
         .skip((currentPage - 1) * perPage)
         .limit(perPage);
@@ -69,7 +69,7 @@ const img = req.file;
   bcrypt
     .hash(password, 12)
     .then(hashedPw => {
-      const user = new User({
+      const user = new UserController({
         name,email,fristName,lastName,website,role,status,
         password: hashedPw,
         ...(img) && {avatar: img.filename},
@@ -77,7 +77,7 @@ const img = req.file;
       return user.save();
     })
     .then(result => {
-      res.status(201).json({ message: 'User created!', userId: result._id });
+      res.status(201).json({ message: 'UserController created!', userId: result._id });
     })
     .catch(err => {
       if (!err.statusCode) {
@@ -106,7 +106,7 @@ const img = req.file;
 bcrypt
     .hash(password, 12)
     .then(hashedPw => {
-      User.findById(id)
+      UserController.findById(id)
       .then(user=>{
         user.name = name;
         user.email = email;
@@ -126,7 +126,7 @@ bcrypt
     })
   .then(result => { 
     res.status(200).json({
-      message: 'User updated successfully!',
+      message: 'UserController updated successfully!',
       post: result
     });
   })
@@ -153,7 +153,7 @@ exports.viewUser =(req, res, next) => {
     });
   }
 
-  User.findById(getId)
+  UserController.findById(getId)
   .populate('posts','title')
   .then(user=>{
       res.status(200).json({
@@ -179,14 +179,14 @@ exports.deleteUsers =(req, res, next) => {
     });
   }
 
-  User.find({'_id':{'$in':userIds}})
+  UserController.find({'_id':{'$in':userIds}})
   .select('name avatar ')
     .then(users=>{
       users.forEach(element => {
         fileHelper.deleteFile('images/'+element.avatar);
       });
 
-      User.deleteMany({'_id':{'$in':userIds}})
+      UserController.deleteMany({'_id':{'$in':userIds}})
       .then(userss=>{
         res.status(200).json({
           message: "Users deleted successffly"

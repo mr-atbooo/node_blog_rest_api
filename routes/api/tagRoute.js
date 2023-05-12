@@ -1,14 +1,14 @@
 const express = require('express');
 
-const categoryController = require('../controllers/category');
-const Category = require('../models/category');
-const isAuth = require('../middleware/is-auth');
+const tagController = require('../../controllers/api/tagController');
+const isAuth = require('../../middleware/api/is-auth');
 
+const TagRoute = require('../../models/tagModel');
 const router = express.Router();
 const { check, body } = require('express-validator');
 
-router.get('/', categoryController.getCategories);
-// st store category
+router.get('/', tagController.getTags);
+// st store tag
 router.post('/store',isAuth,
 [
     body('title',"title is not valid")
@@ -17,10 +17,8 @@ router.post('/store',isAuth,
     .isLength({ min: 3 }).withMessage("title must be 3 length at minimum and 20 at maximum")
     .trim()
     .custom((value, { req }) => {
-        console.log(value);
-        console.log("*********************");
-        return Category.findOne({ title: value }).then(chCat => {
-          if (chCat) {
+        return TagRoute.findOne({ title: value }).then(chTag => {
+          if (chTag) {
             return Promise.reject(
               'The title has already been taken.'
             );
@@ -33,38 +31,27 @@ router.post('/store',isAuth,
     .isLength({ min: 3 }).withMessage("slug must be 3 length at minimum and 20 at maximum")
     .trim()
     .custom((value, { req }) => {
-        return Category.findOne({ slug: value }).then(chCat => {
-            if (chCat) {
+        return TagRoute.findOne({ slug: value }).then(chTag => {
+            if (chTag) {
             return Promise.reject(
                 'The slug has already been taken.'
             );
             }
         });
     }),
-    body('parent_id',"parent_id is not valid")
-    // .custom((value, { req }) => {
-    //     return Category.findById(value)
-    //     .then(chCat => {
-    //         if (!chCat) {
-    //         return Promise.reject(
-    //             'The parent_id not Valid.'
-    //         );
-    //         }
-    //     });
-    // }),
 ],
-categoryController.storeCategory);
-// nd store category
+tagController.storeTag);
+// nd store tag
 
-// st update category
+// st update tag
 router.post('/update',isAuth,
 [
     body('id',"id is not valid")
     .notEmpty().withMessage("id is required")
     .isMongoId().withMessage("id is Not ObjectId")
     .custom((value, { req }) => {
-        return Category.findById(value ).then(chCat => {
-          if (!chCat) {
+        return TagRoute.findById(value ).then(chTag => {
+          if (!chTag) {
             return Promise.reject(
               'id is not valid.'
             );
@@ -77,8 +64,8 @@ router.post('/update',isAuth,
     .isLength({ min: 3 }).withMessage("title must be 3 length at minimum and 20 at maximum")
     .trim()
     .custom((value, { req }) => {
-        return Category.findOne({ title: value,_id:{ $ne: req.body.id }}).then(chCat => {
-          if (chCat) {
+        return TagRoute.findOne({ title: value,_id:{ $ne: req.body.id }}).then(chTag => {
+          if (chTag) {
             return Promise.reject(
               'The title has already been taken.'
             );
@@ -91,57 +78,25 @@ router.post('/update',isAuth,
     .isLength({ min: 3 }).withMessage("slug must be 3 length at minimum and 20 at maximum")
     .trim()
     .custom((value, { req }) => {
-        return Category.findOne({ slug: value,_id:{ $ne: req.body.id }}).then(chCat => {
-            if (chCat) {
+        return TagRoute.findOne({ slug: value,_id:{ $ne: req.body.id }}).then(chTag => {
+            if (chTag) {
             return Promise.reject(
                 'The slug has already been taken.'
             );
             }
         });
     }),
-    body('parent_id',"parent_id is not valid")
-    // .isMongoId().withMessage("parent_id is Not ObjectId")
-    .custom((value, { req }) => {
-        if(req.body.parent_id == req.body.id){
-            return Promise.reject(
-                'The parent_id Can not be Same Id.'
-            );
-        }
-        else
-        {
-            if(value){
-                return Category.findById(value)
-                .then(chCat => {
-                    if (!chCat) {
-                    return Promise.reject(
-                        'The parent_id not Valid.'
-                    );
-                    }
-                });
-            }
-           
-
-        }
-        // return Category.findById(value)
-        // .then(chCat => {
-        //     if (!chCat) {
-        //     return Promise.reject(
-        //         'The parent_id not Valid.'
-        //     );
-        //     }
-        // });
-    }),
 ],
-categoryController.updateCategory);
-// nd update category
+tagController.updateTag);
+// nd update tag
 
-// st show category
+// st show tag
 router.get('/show',[
     check('id',"id is not valid")
     .notEmpty().withMessage("id is required")
     .isMongoId().withMessage("id is Not ObjectId")
     .custom((value, { req }) => {
-        return Category.findById(value).then(chCat => {
+        return TagRoute.findById(value).then(chCat => {
           if (!chCat) {
             return Promise.reject(
                 'id is not valid.'
@@ -149,10 +104,10 @@ router.get('/show',[
           }
         });
       }),
-],categoryController.viewCategory);
-// nd show category
+],tagController.viewTag);
+// nd show tag
 
-//st delete category
+//st delete tag
 router.post('/delete',isAuth,
 [
   body('ids',"ids is not valid")
@@ -160,7 +115,7 @@ router.post('/delete',isAuth,
   .isArray().withMessage('ids must be an array '),
   body('ids.*', 'ids is Not ObjectId').isMongoId()
   .custom((value, { req }) => {
-      return Category.findById(value).then(chCat => {
+      return TagRoute.findById(value).then(chCat => {
         if (!chCat) {
           return Promise.reject(
               'id is not valid.'
@@ -169,7 +124,13 @@ router.post('/delete',isAuth,
       });
     }),
 ],
-categoryController.deleteCategories);
-//nd delete category 
+tagController.deleteTags);
+//nd delete tag 
+
+//st delete all tags
+router.post('/delete-all',isAuth,tagController.deleteAllTags);
+//nd delete all tags
+
+
 
 module.exports = router;

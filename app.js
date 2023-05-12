@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 
-const errorsController = require('./controllers/errors');
-const categoryRoutes = require('./routes/category');
-const tagRoutes = require('./routes/tag');
-const postRoutes = require('./routes/post');
-const commentRoutes = require('./routes/comment');
-const pageRoutes = require('./routes/page');
-const userRoutes = require('./routes/user');
-const authRoutes = require('./routes/auth');
+const errorsController = require('./controllers/api/errorsController');
+const categoryRoutes = require('./routes/api/categoryRoute');
+const tagRoutes = require('./routes/api/tagRoute');
+const postRoutes = require('./routes/api/postRoute');
+const commentRoutes = require('./routes/api/commentRoute');
+const pageRoutes = require('./routes/api/pageRoute');
+const userRoutes = require('./routes/api/userRoute');
+const authRoutes = require('./routes/api/authRoute');
 
 
 const app = express();
