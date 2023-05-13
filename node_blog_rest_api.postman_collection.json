@@ -12,7 +12,13 @@
 					"name": "Tags List",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
 						"url": {
 							"raw": "{{baseURL}}/tags",
 							"host": [
@@ -41,19 +47,19 @@
 							"urlencoded": [
 								{
 									"key": "title",
-									"value": "tag2",
+									"value": "tag112",
 									"description": "required",
 									"type": "text"
 								},
 								{
 									"key": "slug",
-									"value": "tag2",
+									"value": "tag212",
 									"description": "required",
 									"type": "text"
 								},
 								{
 									"key": "content",
-									"value": "bjkgfyujfyfy",
+									"value": "bjkgfyujfyfy2",
 									"description": "optional ",
 									"type": "text"
 								}
@@ -130,7 +136,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/tags/show?id=6454f19c286213297aac0a38",
+							"raw": "{{baseURL}}/tags/show?id=6454e93b0fe6e8d42c56bcde",
 							"host": [
 								"{{baseURL}}"
 							],
@@ -141,12 +147,12 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "6454e93b0fe6e8d42c56bcde",
-									"disabled": true
+									"value": "6454e93b0fe6e8d42c56bcde"
 								},
 								{
 									"key": "id",
-									"value": "6454f19c286213297aac0a38"
+									"value": "6454f19c286213297aac0a38",
+									"disabled": true
 								}
 							]
 						}
@@ -277,21 +283,22 @@
 							"urlencoded": [
 								{
 									"key": "title",
-									"value": "cat_111",
+									"value": "category111",
 									"description": "required",
 									"type": "text"
 								},
 								{
 									"key": "slug",
-									"value": "cat_111",
+									"value": "category111",
 									"description": "required",
 									"type": "text"
 								},
 								{
 									"key": "parent_id",
-									"value": "644fe7baaa5e703344b1933f",
+									"value": "",
 									"description": "optional - category id",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "content",
@@ -344,7 +351,8 @@
 									"key": "parent_id",
 									"value": "644ff5c3b16b10bfc49b9a82",
 									"description": "optional - category id",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "content",
@@ -354,7 +362,7 @@
 								},
 								{
 									"key": "id",
-									"value": "644ff72ca0e5a5656a0f688f",
+									"value": "645f91e1501c18def4f19db6",
 									"type": "text"
 								}
 							]
@@ -531,7 +539,8 @@
 								},
 								{
 									"key": "publish",
-									"value": "1",
+									"value": "0",
+									"description": "required-between 0,1",
 									"type": "text"
 								},
 								{
@@ -550,6 +559,11 @@
 									"value": "6454e9f50fe6e8d42c56bcee",
 									"type": "default",
 									"disabled": true
+								},
+								{
+									"key": "publishAt",
+									"value": "2023-05-16",
+									"type": "default"
 								}
 							]
 						},
@@ -570,13 +584,19 @@
 					"name": "Posts update",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
 								{
 									"key": "title",
-									"value": "666666666666666",
+									"value": "645fbe6d813725d3699734c7",
 									"description": "required",
 									"type": "text"
 								},
@@ -594,7 +614,7 @@
 								},
 								{
 									"key": "category",
-									"value": "644a5ff69a6586edc0a4aaca",
+									"value": "644fe751479a7e33378119bd",
 									"type": "text"
 								},
 								{
@@ -609,7 +629,7 @@
 								},
 								{
 									"key": "id",
-									"value": "644ed9df88865219a3b4b9ce",
+									"value": "645fbb2a7d101e682aff29ce",
 									"type": "text"
 								}
 							]
@@ -633,19 +653,24 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/posts/show/644ed99c7a61d7e84e32da30",
+							"raw": "{{baseURL}}/posts/show/6454ea160fe6e8d42c56bcf5",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"posts",
 								"show",
-								"644ed99c7a61d7e84e32da30"
+								"6454ea160fe6e8d42c56bcf5"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "10",
+									"value": "644ed99c7a61d7e84e32da30",
+									"disabled": true
+								},
+								{
+									"key": null,
+									"value": "6454ea160fe6e8d42c56bcf5",
 									"disabled": true
 								}
 							]
@@ -714,13 +739,197 @@
 			]
 		},
 		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "Comments List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/comments",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Store",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "text",
+									"value": "cat_111",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "post",
+									"value": "6454ea160fe6e8d42c56bcf5",
+									"description": "required,_id from posts api",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/comments/store",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"comments",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment Update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "text",
+									"value": "ay 7aga",
+									"description": "optional ",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "645b432535177c323e030f0c",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/comments/update",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"comments",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comment show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/comments/show?id=645b432535177c323e030f0c",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"comments",
+								"show"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "645b432535177c323e030f0c"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comments Delete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ids[]",
+									"value": "645b4335bd736a13e68cc0d3",
+									"type": "text"
+								},
+								{
+									"key": "ids[]",
+									"value": "64493ee2dc07af7bfe03cabf",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/comments/delete",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"comments",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "page",
 			"item": [
 				{
 					"name": "Pages List",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "default"
+							}
+						],
 						"url": {
 							"raw": "{{baseURL}}/pages?page=1&size=50",
 							"host": [
@@ -1055,7 +1264,7 @@
 							"formdata": [
 								{
 									"key": "id",
-									"value": "645745b0f64b4ad0bda277df",
+									"value": "6451649e8a87f7a1ac5a4f46",
 									"type": "default"
 								},
 								{
@@ -1066,7 +1275,7 @@
 								},
 								{
 									"key": "email",
-									"value": "a12@a.com",
+									"value": "a@a.com",
 									"description": "required",
 									"type": "text"
 								},
@@ -1286,7 +1495,8 @@
 									"key": "email",
 									"value": "b@a.com",
 									"description": "required-email",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "password",

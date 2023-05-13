@@ -1,0 +1,151 @@
+const {body, check} = require("express-validator");
+const Category = require("../models/categoryModel");
+exports.store = [
+    body('title',"title is not valid")
+        .notEmpty().withMessage("title is required")
+        .isString().withMessage("title must be string")
+        .isLength({ min: 3 }).withMessage("title must be 3 length at minimum and 20 at maximum")
+        .trim()
+        .custom((value, { req }) => {
+            console.log(value);
+            console.log("*********************");
+            return Category.findOne({ title: value }).then(chCat => {
+                if (chCat) {
+                    return Promise.reject(
+                        'The title has already been taken.'
+                    );
+                }
+            });
+        }),
+    body('slug',"slug is not valid")
+        .notEmpty().withMessage("slug is required")
+        .isString().withMessage("slug must be string")
+        .isLength({ min: 3 }).withMessage("slug must be 3 length at minimum and 20 at maximum")
+        .trim()
+        .custom((value, { req }) => {
+            return Category.findOne({ slug: value }).then(chCat => {
+                if (chCat) {
+                    return Promise.reject(
+                        'The slug has already been taken.'
+                    );
+                }
+            });
+        }),
+    body('parent_id',"parent_id is not valid")
+        .optional()
+        .isMongoId().withMessage("parent_id is Not ObjectId")
+        .custom((value, { req }) => {
+            return Category.findById(value)
+                .then(chCat => {
+                    if (!chCat) {
+                        return Promise.reject(
+                            'The parent_id not Valid.'
+                        );
+                    }
+                });
+        }),
+];
+exports.update = [
+        body('id',"id is not valid")
+            .notEmpty().withMessage("id is required")
+            .isMongoId().withMessage("id is Not ObjectId")
+            .custom((value, { req }) => {
+                return Category.findById(value ).then(chCat => {
+                    if (!chCat) {
+                        return Promise.reject(
+                            'id is not valid.'
+                        );
+                    }
+                });
+            }),
+        body('title',"title is not valid")
+            .notEmpty().withMessage("title is required")
+            .isString().withMessage("title must be string")
+            .isLength({ min: 3 }).withMessage("title must be 3 length at minimum and 20 at maximum")
+            .trim()
+            .custom((value, { req }) => {
+                return Category.findOne({ title: value,_id:{ $ne: req.body.id }}).then(chCat => {
+                    if (chCat) {
+                        return Promise.reject(
+                            'The title has already been taken.'
+                        );
+                    }
+                });
+            }),
+        body('slug',"slug is not valid")
+            .notEmpty().withMessage("slug is required")
+            .isString().withMessage("slug must be string")
+            .isLength({ min: 3 }).withMessage("slug must be 3 length at minimum and 20 at maximum")
+            .trim()
+            .custom((value, { req }) => {
+                return Category.findOne({ slug: value,_id:{ $ne: req.body.id }}).then(chCat => {
+                    if (chCat) {
+                        return Promise.reject(
+                            'The slug has already been taken.'
+                        );
+                    }
+                });
+            }),
+        body('parent_id',"parent_id is not valid")
+            .optional()
+            .isMongoId().withMessage("parent_id is Not ObjectId")
+            .custom((value, { req }) => {
+                if(req.body.parent_id == req.body.id){
+                    return Promise.reject(
+                        'The parent_id Can not be Same Id.'
+                    );
+                }
+                else
+                {
+                    if(value){
+                        return Category.findById(value)
+                            .then(chCat => {
+                                if (!chCat) {
+                                    return Promise.reject(
+                                        'The parent_id not Valid.'
+                                    );
+                                }
+                            });
+                    }
+
+
+                }
+                // return Category.findById(value)
+                // .then(chCat => {
+                //     if (!chCat) {
+                //     return Promise.reject(
+                //         'The parent_id not Valid.'
+                //     );
+                //     }
+                // });
+            }),
+    ];
+exports.show = [
+    check('id',"id is not valid")
+        .notEmpty().withMessage("id is required")
+        .isMongoId().withMessage("id is Not ObjectId")
+        .custom((value, { req }) => {
+            return Category.findById(value).then(chCat => {
+                if (!chCat) {
+                    return Promise.reject(
+                        'id is not valid.'
+                    );
+                }
+            });
+        }),
+];
+exports.delete = [
+    body('ids',"ids is not valid")
+        .notEmpty().withMessage("ids is required")
+        .isArray().withMessage('ids must be an array '),
+    body('ids.*', 'ids is Not ObjectId').isMongoId()
+        .custom((value, { req }) => {
+            return Category.findById(value).then(chCat => {
+                if (!chCat) {
+                    return Promise.reject(
+                        'id is not valid.'
+                    );
+                }
+            });
+        }),
+];

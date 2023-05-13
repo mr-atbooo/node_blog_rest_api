@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const CommentController = require('../../models/commentModel');
+const Comment = require('../../models/commentModel');
 const Post = require('../../models/postModel');
 
 exports.getComments = async (req, res, next) => {
@@ -8,11 +8,11 @@ exports.getComments = async (req, res, next) => {
   
   try
   {
-    const totalItems = await CommentController.find().countDocuments();
-    const comments = await CommentController.find().populate('post','title')
+    const totalItems = await Comment.find().countDocuments();
+    const comments = await Comment.find().populate('post','title')
     .populate('creator','name').skip((currentPage - 1) * perPage).limit(perPage);
-        // const query =  await CommentController.find().populate('post','title');
-      // const comments =  await CommentController.find()
+        // const query =  await Comment.find().populate('post','title');
+      // const comments =  await Comment.find()
       // .populate('post','title')
       // .populate('creator','name')
       // .skip((currentPage - 1) * perPage)
@@ -65,7 +65,7 @@ if (!errors.isEmpty()) {
 
   try
   {
-    const newComment = new CommentController({
+    const newComment = new Comment({
       text:text,post:postId,
       creator:creator,
     });
@@ -75,7 +75,7 @@ if (!errors.isEmpty()) {
     post.comments.push(comment);
     await post.save();
       res.status(201).json({
-        message: 'CommentController created successfully!',
+        message: 'Comment created successfully!',
         Comment: comment
       });
     
@@ -105,7 +105,7 @@ exports.updateComment = async (req, res, next) => {
 
   try
   {
-    const comment = await CommentController.findById(id);
+    const comment = await Comment.findById(id);
     comment.text=text;
       if (status != "") {
         comment.status =status;
@@ -113,7 +113,7 @@ exports.updateComment = async (req, res, next) => {
     const updateComment = await comment.save();
       
     res.status(201).json({
-      message: 'CommentController Updated successfully!',
+      message: 'Comment Updated successfully!',
       comment: updateComment
     });
 
@@ -139,12 +139,12 @@ exports.viewComment =async (req, res, next) => {
 
   try
   {
-    const getCommentData = await CommentController.findById(commentId)
+    const getCommentData = await Comment.findById(commentId)
     .select('-createdAt -updatedAt -__v').populate('post','title')
     .populate('creator','name');
 
     res.status(201).json({
-      message: 'Fetched CommentController info successfully.',
+      message: 'Fetched Comment info successfully.',
       comment: getCommentData
     });
 
@@ -170,9 +170,9 @@ exports.deleteComments = async (req, res, next) => {
 
   try
   {
-    const comments = await CommentController.deleteMany({'_id':{'$in':commentIds}});
+    const comments = await Comment.deleteMany({'_id':{'$in':commentIds}});
     res.status(200).json({
-      message: "Comments deleted successffly"
+      message: "Comments deleted successfully"
     });
   }
   catch(err){

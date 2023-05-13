@@ -1,13 +1,14 @@
 const { validationResult } = require('express-validator');
-const CategoryController = require('../../models/categoryModel');
+const Category = require('../../models/categoryModel');
 const Post = require('../../models/postModel');
 
 exports.getCategories = (req, res, next) => {
   
-  CategoryController.find()
+  Category.find()
   .populate('parentId','title')
     .then(categories => {
       res.status(200).json({
+        message: 'Fetched categories successfully.',
         categories: categories
       });
     }
@@ -38,7 +39,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  const category = new CategoryController({
+  const category = new Category({
     title:title,
     slug:slug,
     ...(parentId != "") && {parentId: parentId},
@@ -48,7 +49,7 @@ if (!errors.isEmpty()) {
   category.save()
   .then(result => { 
     res.status(201).json({
-      message: 'CategoryController created successfully!',
+      message: 'Category created successfully!',
       category: result
     });
   })
@@ -76,7 +77,7 @@ if (!errors.isEmpty()) {
   });
 }
 
-  CategoryController.findById(id)
+  Category.findById(id)
     .then(category=>{
       category.title=title;
       category.slug=slug;
@@ -88,7 +89,7 @@ if (!errors.isEmpty()) {
     })
   .then(result => { 
     res.status(201).json({
-      message: 'CategoryController Updated successfully!',
+      message: 'Category Updated successfully!',
       category: result
     });
   })
@@ -111,7 +112,7 @@ exports.viewCategory =(req, res, next) => {
     });
   }
 
-  CategoryController.findById(catId)
+  Category.findById(catId)
     .select('-createdAt -updatedAt -__v')
     .then(category=>{
   
@@ -176,10 +177,11 @@ exports.deleteCategories =(req, res, next) => {
     });
   }
 
-  CategoryController.deleteMany({'_id':{'$in':catIds}})
+  Category.deleteMany({'_id':{'$in':catIds}})
     .then(category=>{
       res.status(200).json({
-        message: "Categories deleted successffly"
+
+        message: "Categories deleted successfully"
       });
     })
  

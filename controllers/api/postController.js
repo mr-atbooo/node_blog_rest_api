@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const PostController = require('../../models/postModel');
+const Post = require('../../models/postModel');
 const Category = require('../../models/categoryModel');
 const User = require('../../models/userModel');
 
@@ -9,11 +9,11 @@ exports.getPosts = (req, res, next) => {
   const currentPage = +req.query.page || 1;
   const perPage = +req.query.size || 2;
   let totalItems;
-  PostController.find()
+  Post.find()
     .countDocuments()
     .then(count => {
       totalItems = count;
-      return PostController.find()
+      return Post.find()
         .populate('categoryId','title')
         .populate('tags','title')
         .skip((currentPage - 1) * perPage)
@@ -51,8 +51,8 @@ exports.getPosts = (req, res, next) => {
 exports.storePost =(req, res, next) => {
   const title = req.body.title;
   const publish = req.body.publish;
-  // const publishAt = req.body.publishAt;
-  const publishAt = new Date('2021-10-26');
+  const getPublishAt = req.body.publishAt ?new Date(req.body.publishAt): new Date();
+  const publishAt = new Date();
   const status = req.body.status;
   const category = req.body.category;
   const excerpt = req.body.excerpt;
@@ -98,11 +98,11 @@ if (!errors.isEmpty()) {
 
 
 
-  const post = new PostController({
+  const post = new Post({
     creator: req.userId,
      title :title,
      publish :publish,
-     publishAt :publishAt,
+     publishAt :publish===1?publishAt:getPublishAt,
      status :status,
     //  category :category,
      img :imgName,
@@ -122,10 +122,15 @@ if (!errors.isEmpty()) {
     return user.save();
   })
   .then(result => {
+    return Post.findById(post._id)
+        .populate('categoryId','title')
+        .populate('tags','title')
+        .populate('comments','text');
+  })
+  .then(postData => {
     res.status(201).json({
-      message: 'PostController created successfully!',
-      post: post,
-      creator: { _id: creator._id, name: creator.name }
+      message: 'Post created successfully!',
+      post: postData,
     });
   })
   .catch(err => {
@@ -140,8 +145,8 @@ exports.updatePost =(req, res, next) => {
   const id = req.body.id;
   const title = req.body.title;
   const publish = req.body.publish;
-  // const publishAt = req.body.publishAt;
-  const publishAt = new Date('2021-10-26');
+  const getPublishAt = req.body.publishAt ?new Date(req.body.publishAt): new Date();
+  const publishAt = new Date();
   const status = req.body.status;
   const category = req.body.category;
   const excerpt = req.body.excerpt;
@@ -174,16 +179,14 @@ if (!errors.isEmpty()) {
   });
 }
 
-  PostController.findById(id)
+  Post.findById(id)
     .then(post=>{
       post.title = title;
       post.publish = publish;
-      post.publishAt = publishAt;
+      post.publishAt = publish===1?publishAt:getPublishAt;
       post.status = status;
-      // product.img :imgName,
       post.excerpt = excerpt;
       post.content = content;
-    //  ...(category != "") && {categoryId: category},
       
       if (category) 
       {
@@ -196,19 +199,24 @@ if (!errors.isEmpty()) {
       }
       return post.save()
     })
-  .then(result => { 
-    console.log(result);
-    res.status(200).json({
-      message: 'PostController updated successfully!',
-      post: result
+    .then(result => {
+      return Post.findById(id)
+          .populate('categoryId','title')
+          .populate('tags','title')
+          .populate('comments','text');
+    })
+    .then(postDATA => {
+      res.status(200).json({
+        message: 'Post updated successfully!',
+        post: postDATA
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
-  })
-  .catch(err => {
-    console.log(err);
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  });    
 };
 
 exports.viewPost =(req, res, next) => {
@@ -223,7 +231,7 @@ exports.viewPost =(req, res, next) => {
     });
   }
 
-  PostController.findById(catId)
+  Post.findById(catId)
     .populate('categoryId','title')
     .populate('tags','title')
     .populate('comments','text')
@@ -265,22 +273,22 @@ exports.deletePosts =(req, res, next) => {
     });
   }
 
-  PostController.find({'_id':{'$in':postIds}})
+  Post.find({'_id':{'$in':postIds}})
   .select('title img ')
     .then(posts=>{
       posts.forEach(element => {
         fileHelper.deleteFile('images/'+element.img);
       });
 
-      PostController.deleteMany({'_id':{'$in':postIds}})
+      Post.deleteMany({'_id':{'$in':postIds}})
       .then(category=>{
         res.status(200).json({
-          message: "Posts deleted successffly"
+          message: "Posts deleted successfully"
         });
       })
       
       // res.status(200).json({
-      //   message: "Posts deleted successffly",
+      //   message: "Posts deleted successfully",
       //   posts:posts
       // });
     })
