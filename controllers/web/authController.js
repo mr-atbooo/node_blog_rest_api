@@ -2,6 +2,11 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
 const userModel = require('../../models/userModel');
+const categoryModel = require('../../models/categoryModel');
+const commentModel = require('../../models/commentModel');
+const pageModel = require('../../models/pageModel');
+const postModel = require('../../models/postModel');
+const tagModel = require('../../models/tagModel');
 const fileHelper = require('../../util/file');
 
 exports.signup = (req, res, next) => {
@@ -40,12 +45,36 @@ exports.index = (req, res, next) => {
   res.redirect('/dashboard');
 };
 
-exports.dashboard = (req, res, next) => {
+exports.dashboard = async (req, res, next) => {
+  try{
+    
+  console.log(req.user);
+  console.log("*********************");
+  const postCount = await postModel.find().countDocuments();
+  const categoryCount = await categoryModel.find().countDocuments();
+  const pageCount = await pageModel.find().countDocuments();
+  const userCount = await userModel.find().countDocuments();
+  const commentCount = await commentModel.find().countDocuments();
+  const tagCount = await tagModel.find().countDocuments();
+
+  console.log(tagCount);
   res.render('admin/dashboard',{
     pageTitle:'الصفحة الرئيسية',
     path:'/dashboard',
     csrfToken : req.csrfToken(),
+    userName:req.user.fristName+' '+req.user.lastName,
+    postCount:postCount,
+    categoryCount:categoryCount,
+    pageCount:pageCount,
+    userCount:userCount,
+    commentCount:commentCount,
+    tagCount:tagCount
   });
+  }
+  catch(err){
+    console.log(err);
+    // res.redirect('/login');
+  };
 };
 
 exports.getLogin = (req, res, next) => 
@@ -111,6 +140,7 @@ exports.postLogin = (req, res, next) => {
         }
           req.session.isLoggedIn = true;
           req.session.user = user;
+          console.log(user);
           console.log('well done brooooooooo');
           return req.session.save(err => {
             console.log(err);
