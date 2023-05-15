@@ -30,6 +30,8 @@ exports.store = [
             }
         });
     }),
+    body('content',"Content is not valid")
+    .notEmpty().withMessage("Content is required")
 ];
 exports.update = [
     body('id',"id is not valid")
@@ -72,6 +74,8 @@ exports.update = [
             }
         });
     }),
+    body('content',"Content is not valid")
+    .notEmpty().withMessage("Content is required")
 ];
 exports.show = [
     check('id',"id is not valid")

@@ -1,0 +1,138 @@
+<%- include('../../includes/header.ejs') %>
+
+</head>
+
+<body>
+
+	<div class="o-page">
+		<div class="o-page__sidebar js-page-sidebar">
+			<%- include('../../includes/navigation.ejs') %>
+		</div>
+
+		<main class="o-page__content">
+			<header class="c-navbar u-mb-medium">
+				<button class="c-sidebar-toggle js-sidebar-toggle">
+					<i class="feather icon-align-left"></i>
+				</button>
+
+				<h2 class="c-navbar__title">التصنيفات</h2>
+
+			</header>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-5">
+
+						<div class="c-alert c-alert--info u-mb-medium">
+
+							<div class="c-alert__content">
+								<form>
+									<div class="c-field">
+										<label class="title">العنوان</label>
+										<input type="text" name="" class="c-input u-mb-small" placeholder="العنوان" id="title">
+									</div>
+									<div class="c-field">
+										<label class="slug">الاسم اللطيف</label>
+										<input type="text" name="slug" class="c-input u-mb-small" placeholder="الاسم اللطيف" id="slug">
+									</div>
+									<div class="c-field">
+										<label class="status">التصنيف الأب</label>
+										<select name="" id="" class="c-input u-mb-small">
+											<option value="-1">بدون</option>
+											<option value="1">غير مصنف</option>
+										</select>
+									</div>
+									<div class="c-field">
+										<label class="c-field__label">المحتوى</label>
+										<textarea class="c-input u-mb-small" rows="6" placeholder="إضافة نعليق ..."></textarea>
+									</div>
+									<button class="c-btn c-btn--fullwidth c-btn--info">حفظ </button>
+								</form>
+
+							</div>
+						</div><!-- // .c-alert -->
+
+					</div>
+					<div class="col-md-7">
+
+						<div class="c-table-responsive@wide">
+							<table class="c-table">
+								<thead class="c-table__head">
+									<tr class="c-table__row">
+										<th class="c-table__cell c-table__cell--head">#</th>
+										<th class="c-table__cell c-table__cell--head">العنوان</th>
+										<th class="c-table__cell c-table__cell--head">الوصف</th>
+										<th class="c-table__cell c-table__cell--head">الاسم الطيف</th>
+										<th class="c-table__cell c-table__cell--head">العدد</th>
+										<th class="c-table__cell c-table__cell--head"> عرض</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr class="c-table__row">
+										<td class="c-table__cell">1</td>
+										<td class="c-table__cell">
+											<div class="o-media">
+												<div class="o-media__body">
+													<a href="category-view.html">
+														<h6> برمجة التطبيقات</h6>
+													</a>
+												</div>
+											</div>
+										</td>
+										<td class="c-table__cell">
+											<div class="o-media">
+												<div class="o-media__body">
+													<a href="balagh.html">
+														<h6>حنان محمود</h6>
+													</a>
+												</div>
+											</div>
+										</td>
+										
+										<td class="c-table__cell">
+											<img src="" alt="" srcset="">
+										</td>
+
+										<td class="c-table__cell">
+											<a href="category-view.html">
+												<span class="c-badge c-badge--small c-badge--warning">10 </span>
+											</a>
+											
+										</td>
+										
+										
+										<td class="c-table__cell">
+											<a href="category-edit.html" class="c-btn c-btn--success has-icon">
+												تعديل <i class="feather icon-wranch"></i>
+											</a>
+											<a href="#" class="c-btn c-btn--danger has-icon">
+												حذف <i class="feather icon-wranch"></i>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12">
+						<footer class="c-footer">
+							<p>&copy; 2021 جميع الحقوق محفوظة</p>
+							<span class="c-footer__divider">|</span>
+
+						</footer>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<!-- Main JavaScript -->
+	<script src="js/neat.js"></script>
+</body>
+
+</html>

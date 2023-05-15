@@ -1,0 +1,54 @@
+<aside class="c-sidebar">
+    <div class="c-sidebar__brand">
+        <a href="#"><img src="../images/logo-h.png" alt="Neat"></a>
+    </div>
+    <div class="c-sidebar__body">
+        <span class="c-sidebar__title">لوحة التحكم</span>
+        <ul class="c-sidebar__list">
+            <li>
+                <a class="c-sidebar__link <%= path === '/dashboard' ? 'is-active' : '' %>" href="/dashboard">
+                    <i class="c-sidebar__icon feather icon-home"></i>الصفحة الرئيسية
+                </a>
+            </li>
+            <!-- <li>
+                <a class="c-sidebar__link <%= path === '/dashboard/posts' ? 'is-active' : '' %>" href="/dashboard/posts">
+                    <i class="c-sidebar__icon feather icon-file-text"></i> المقالات
+                </a>
+            </li>
+            <li>
+                <a class="c-sidebar__link  <%= path === '/dashboard/categories' ? 'is-active' : '' %>" href="/dashboard/categories">
+                    <i class="c-sidebar__icon feather icon-file-text"></i> التصنيفات
+                </a>
+            </li> -->
+            <li>
+                <a class="c-sidebar__link  <%= path === '/dashboard/tags' ? 'is-active' : '' %>" href="/dashboard/tags">
+                    <i class="c-sidebar__icon feather icon-file-text"></i> الوسوم
+                </a>
+            </li>
+            <!-- <li>
+                <a class="c-sidebar__link  <%= path === '/dashboard/pages' ? 'is-active' : '' %>" href="/dashboard/pages">
+                    <i class="c-sidebar__icon feather icon-bar-chart-2"></i> الصفحات
+                </a>
+            </li>
+            <li>
+                <a class="c-sidebar__link" href="/dashboard/comments">
+                    <i class="c-sidebar__icon feather icon-bar-chart-2"></i> التعليقات
+                </a>
+            </li> 
+            
+            <li>
+                <a class="c-sidebar__link " href="/dashboard/users">
+                    <i class="c-sidebar__icon feather icon-users"></i>المستخدمين
+                </a>
+            </li>
+            -->
+        </ul>
+    </div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="c-sidebar__footer logoutBtn">تسجيل الخروج <i class="c-sidebar__footer-icon feather icon-power"></i></button>
+    </form>
+    <!-- <a class="c-sidebar__footer" href="/">
+        تسجيل الخروج <i class="c-sidebar__footer-icon feather icon-power"></i>
+    </a> -->
+</aside>

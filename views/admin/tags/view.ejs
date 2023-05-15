@@ -1,0 +1,79 @@
+<%- include('../../includes/header.ejs') %>
+</head>
+
+<body>
+
+	<div class="o-page">
+		<div class="o-page__sidebar js-page-sidebar">
+			<%- include('../../includes/navigation.ejs') %>
+		</div>
+
+		<main class="o-page__content">
+			<header class="c-navbar u-mb-medium">
+				<button class="c-sidebar-toggle js-sidebar-toggle">
+					<i class="feather icon-align-left"></i>
+				</button>
+
+				<h2 class="c-navbar__title">تعديل الوسم</h2>
+
+			</header>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="c-alert c-alert--info u-mb-medium">
+							<div class="c-alert__content">
+
+								<% for (let error of validationErrors) { %>
+									<span class="text-error"><%= error.msg%></span>
+									
+								<%}%>	
+								<br>
+								<form  action="/dashboard/tags/update" method="POST" >
+									
+									<input type="hidden" name="id" value="<%= tag._id %>">
+									<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+									<div class="c-field">
+										<label class="title">العنوان</label>
+										<input type="text" name="title" class="c-input u-mb-small <%= validationErrors.find(e => e.path == 'title') ? 'invalid' : '' %>" 
+										placeholder="العنوان" id="title"
+										value="<% if (editing) { %><%= tag.title %><% } %>">
+									</div>
+									<div class="c-field">
+										<label class="slug">الاسم اللطيف</label>
+										<input type="text" name="slug" class="c-input u-mb-small <%= validationErrors.find(e => e.path == 'slug') ? 'invalid' : '' %>" 
+										placeholder="الاسم اللطيف" id="slug"
+										value="<% if (editing) { %><%= tag.slug %><% } %>">
+									</div>
+									<div class="c-field">
+										<label class="c-field__label">المحتوى</label>
+										<textarea class="c-input u-mb-small  <%= validationErrors.find(e => e.path == 'content') ? 'invalid' : '' %>" 
+										name="content" rows="6" 
+										placeholder="إضافة نعليق ..."><% if (editing) { %><%= tag.content %><% } %></textarea>
+									</div>
+									<button class="c-btn c-btn--fullwidth c-btn--info">حفظ </button>
+								</form>
+							</div>
+						</div><!-- // .c-alert -->
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-12">
+						<footer class="c-footer">
+							<p>&copy; 2021 جميع الحقوق محفوظة</p>
+							<span class="c-footer__divider">|</span>
+
+						</footer>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<!-- Main JavaScript -->
+	<script src="js/neat.js"></script>
+</body>
+
+</html>
