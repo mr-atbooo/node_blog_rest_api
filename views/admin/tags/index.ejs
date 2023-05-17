@@ -64,9 +64,9 @@
 											class="c-input u-mb-small <%= validationErrors.find(e => e.path == 'content') ? 'invalid' : '' %>"
 											placeholder="إضافة نعليق ..."><% if (hasError) { %><%= contentValue %><% } %></textarea>
 									</div>
-									<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+									<input type="hidden" name="_csrf" id="csrfTokenId" value="<%= csrfToken %>">
 									
-									<button class="c-btn c-btn--fullwidth c-btn--info">حفظ </button>
+									<button onclick="send()" class="c-btn c-btn--fullwidth c-btn--info">حفظ </button>
 								</form>
 
 							</div>
@@ -76,7 +76,7 @@
 					<div class="col-md-7">
 
 						<div class="c-table-responsive@wide">
-							<table class="c-table">
+							<table class="c-table" id="tagTableId">
 								<thead class="c-table__head">
 									<tr class="c-table__row">
 										<th class="c-table__cell c-table__cell--head">#</th>
@@ -88,11 +88,11 @@
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody id="tag_table_body">
 									<% let count = 0 %>
 									<% for (let tag of tags) { %>
 										<% count++ %>
-									<tr class="c-table__row">
+									<tr class="c-table__row" id="row_<%=tag._id%>">
 										<td class="c-table__cell"><%= count %></td>
 										<td class="c-table__cell">
 											<div class="o-media">
@@ -162,7 +162,97 @@
 	</div>
 
 	<!-- Main JavaScript -->
-	<script src="js/neat.js"></script>
+	<script src="/js/neat.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script >
+		let socket = io();
+
+		// client-side
+			socket.on("hello", (arg) => {
+			console.log(arg); // world
+			});
+
+			socket.on("tag", (data) => {
+				if(data.action === 'create'){
+					this.addTagToTable(data.tag);
+				}
+					
+			
+				console.log(data); // world
+			});
+			
+		// Listen for "countUpdated"
+		socket.on('connect', () => {
+			console.log('connect')
+		})
+		
+		function send(){
+			let s = socket.emit('clientEvent');
+
+			socket.emit("welcome", "atbooo");
+			console.log(s);
+		}
+
+		function addTagToTable(tag){
+			var table = document.getElementById("tagTableId");
+			var getCsrfTokenValue = document.getElementById("csrfTokenId").value;
+// 			getCsrfTokenId.value
+			// console.log(getCsrfTokenId.value);
+
+			
+
+			var tbodyRowCount = table.tBodies[0].rows.length;
+			
+
+			document.getElementById("tag_table_body").innerHTML +=
+			`<tr class="c-table__row"  id="row_${tag._id}">
+				<td class="c-table__cell">${tbodyRowCount+1}</td>
+				<td class="c-table__cell">
+					<div class="o-media">
+						<div class="o-media__body">
+							<a href="category-view.html">
+								<h6>${tag.title}</h6>
+							</a>
+						</div>
+					</div>
+				</td>
+				<td class="c-table__cell">
+					<div class="o-media">
+						<div class="o-media__body">
+							<h6>${tag.content}</h6>
+						</div>
+					</div>
+				</td>
+				<td class="c-table__cell">
+					<div class="o-media">
+						<div class="o-media__body">
+							<h6>${tag.slug}</h6>
+						</div>
+					</div>
+				</td>
+				<td class="c-table__cell">
+					<a href="category-view.html">
+						<span class="c-badge c-badge--small c-badge--warning">10 </span>
+					</a>
+				</td>
+				<td class="c-table__cell">
+					<a href="/dashboard/tags/show?id=${tag._id}" style="display: inline-block;" class="c-btn c-btn--success has-icon">
+						تعديل <i class="feather icon-wranch"></i>
+					</a>
+					<form action="/dashboard/tags/delete" method="POST" style="display: inline-block;" >
+						<input type="hidden" value="${tag._id}" name="ids[]">
+						<input type="hidden" name="_csrf" value="${getCsrfTokenValue}">
+						<button class="c-btn c-btn--danger has-icon" 
+						onclick="return confirm('Are you sure you want to delete this item?');"
+						type="submit">حذف</button>
+					</form>
+				</td>
+			</tr>
+			`;
+				
+		}
+
+	</script>
 </body>
 
 </html>

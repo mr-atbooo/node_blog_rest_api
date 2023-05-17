@@ -131,9 +131,30 @@ app.use((error, req, res, next) => {
 // mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://localhost:27017/blog')
 .then(result=>{
-  app.listen('3920',()=>{
+    
+    const server = app.listen(3920,()=>{
     console.log('Node.js Web server at localhost:3920 is running');
-});
+    });
+// const server = app.listen(8080);
+    const io = require('./socket').init(server);
+    io.on('connection', socket => {
+      console.log('Client connected');
+
+      socket.emit("hello", "world");
+
+      socket.on('clientEvent', ()=>{
+        console.log('Client make event')
+      });
+
+      socket.on("welcome", (arg) => {
+        console.log(arg); // world
+        });
+
+    });
+    // const io = require('socket.io')(server);
+    // io.on('connection', socket => {
+    //   console.log('Client connected');
+    // });
 })
 .catch(err=>{
   console.log(err);

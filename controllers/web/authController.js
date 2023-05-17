@@ -48,8 +48,8 @@ exports.index = (req, res, next) => {
 exports.dashboard = async (req, res, next) => {
   try{
     
-  console.log(req.user);
-  console.log("*********************");
+  // console.log(req.user);
+  // console.log("*********************");
   const postCount = await postModel.find().countDocuments();
   const categoryCount = await categoryModel.find().countDocuments();
   const pageCount = await pageModel.find().countDocuments();
@@ -57,7 +57,7 @@ exports.dashboard = async (req, res, next) => {
   const commentCount = await commentModel.find().countDocuments();
   const tagCount = await tagModel.find().countDocuments();
 
-  console.log(tagCount);
+  // console.log(tagCount);
   res.render('admin/dashboard',{
     pageTitle:'الصفحة الرئيسية',
     path:'/dashboard',
@@ -140,8 +140,8 @@ exports.postLogin = (req, res, next) => {
         }
           req.session.isLoggedIn = true;
           req.session.user = user;
-          console.log(user);
-          console.log('well done brooooooooo');
+          // console.log(user);
+          // console.log('well done brooooooooo');
           return req.session.save(err => {
             console.log(err);
             res.redirect('/');
