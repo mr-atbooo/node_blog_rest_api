@@ -176,6 +176,9 @@
 				if(data.action === 'create'){
 					this.addTagToTable(data.tag);
 				}
+				if(data.action === 'delete'){
+					this.removeTageFromTable(data.tagId);
+				}
 					
 			
 				console.log(data); // world
@@ -193,16 +196,12 @@
 			console.log(s);
 		}
 
-		function addTagToTable(tag){
+
+		function addTagToTable(tag)
+		{
 			var table = document.getElementById("tagTableId");
 			var getCsrfTokenValue = document.getElementById("csrfTokenId").value;
-// 			getCsrfTokenId.value
-			// console.log(getCsrfTokenId.value);
-
-			
-
 			var tbodyRowCount = table.tBodies[0].rows.length;
-			
 
 			document.getElementById("tag_table_body").innerHTML +=
 			`<tr class="c-table__row"  id="row_${tag._id}">
@@ -248,10 +247,14 @@
 					</form>
 				</td>
 			</tr>
-			`;
-				
+			`;				
 		}
 
+
+		function removeTageFromTable(tagId)
+		{
+			document.getElementById(`row_${tagId}`).remove();
+		}
 	</script>
 </body>
 

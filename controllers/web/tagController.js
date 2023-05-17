@@ -94,7 +94,6 @@ if (!errors.isEmpty()) {
       action: 'create',
       tag: result
     });
-    console.log(xx);
     res.redirect('/dashboard/tags');
   })
   .catch(err => {
@@ -229,6 +228,10 @@ exports.deleteTags =(req, res, next) => {
       // res.status(200).json({
       //   message: "Tags deleted successfully"
       // });
+      let xx = io.getIO().emit('tag', {
+        action: 'delete',
+        tagId: tagIds[0]
+      });
       res.redirect('/dashboard/tags');
     })
  
