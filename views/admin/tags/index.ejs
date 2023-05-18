@@ -179,6 +179,9 @@
 				if(data.action === 'delete'){
 					this.removeTageFromTable(data.tagId);
 				}
+				if(data.action === 'update'){
+					this.updateTageInTable(data.tag);
+				}
 					
 			
 				console.log(data); // world
@@ -249,12 +252,41 @@
 			</tr>
 			`;				
 		}
-
-
 		function removeTageFromTable(tagId)
 		{
 			document.getElementById(`row_${tagId}`).remove();
 		}
+	function updateTageInTable(tag)
+	{
+		let parentTr = document.getElementById(`row_${tag._id}`);
+		var tdTitle = parentTr.getElementsByTagName("td")[1];
+		var tdContent = parentTr.getElementsByTagName("td")[2];
+		var tdSlug = parentTr.getElementsByTagName("td")[3];
+
+		tdTitle.innerHTML = 
+		`
+		<div class="o-media">
+						<div class="o-media__body">
+							<h6>${tag.title}</h6>
+						</div>
+					</div>
+		` ;
+		tdContent.innerHTML = 
+		`
+		<div class="o-media">
+						<div class="o-media__body">
+							<h6>${tag.content}</h6>
+						</div>
+					</div>
+		` ;
+		tdSlug.innerHTML = `
+		<div class="o-media">
+						<div class="o-media__body">
+							<h6>${tag.slug}</h6>
+						</div>
+					</div>
+		` ;
+	}
 	</script>
 </body>
 

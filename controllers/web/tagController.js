@@ -144,6 +144,10 @@ if (!errors.isEmpty())
     //   message: 'Tage Updated successfully!',
     //   tag: result
     // });
+    let xx = io.getIO().emit('tag', {
+      action: 'update',
+      tagId: result
+    });
     req.flash('success', 'Tage Updated successfully!');
     res.redirect('/dashboard/tags');
   })

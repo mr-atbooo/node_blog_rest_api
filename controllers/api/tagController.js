@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const Tag = require('../../models/tagModel');
 const Post = require('../../models/postModel');
+const io = require('../../socket');
 
 exports.getTags = (req, res, next) => {
   
@@ -38,6 +39,11 @@ if (!errors.isEmpty()) {
   
   tag.save()
   .then(result => { 
+
+    let xx = io.getIO().emit('tag', {
+      action: 'create',
+      tag: result
+    });
     res.status(201).json({
       message: 'Tag created successfully!',
       tag: result
@@ -74,6 +80,10 @@ if (!errors.isEmpty()) {
       return tag.save()
     })
   .then(result => { 
+    let xx = io.getIO().emit('tag', {
+      action: 'update',
+      tag: result
+    });
     res.status(201).json({
       message: 'Tage Updated successfully!',
       tag: result
