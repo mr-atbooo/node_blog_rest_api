@@ -35,7 +35,11 @@ module.exports = {
   },
   
   createTag: async function({ tagInput }, req) {
-    console.log('111');
+    if (!req.isAuth) {
+      const error = new Error('Not authenticated!');
+      error.code = 401;
+      throw error;
+    }
 
     const errors = [];
   

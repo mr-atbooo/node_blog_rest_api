@@ -7,6 +7,7 @@ var MongoDBStore = require('connect-mongodb-session')(session);
 
 const graphqlSchema = require('./graphql/schema');
 const graphqlResolver = require('./graphql/resolvers');
+const auth = require('./middleware/auth');
 // const csrf = require('csurf');
 
 const app = express();
@@ -41,7 +42,7 @@ var root = {
 //         graphiql: true,
 //     })
 // )
-
+app.use(auth);
 app.use(
     "/graphql",
     graphqlHTTP({
