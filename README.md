@@ -14,6 +14,8 @@
 - [x] You can integrate with any kind of **front-end** website. (:recycle:)
 - [x] Front-end integrate with template engine ejs (Soon will update it! :pushpin:)
 - [x] JWT WebToken (:package:)
+- [x] GraphQl (:package:)
+- [x] Socket.IO (:package:)
 - [x] one to one & one to many and many to many relationship. (🔗)
 
 ## Technologies
