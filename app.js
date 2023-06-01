@@ -49,7 +49,7 @@ app.use(
         rootValue: graphqlResolver,
         graphiql: true,
         pretty:true,
-        formatError(err) {
+        customFormatErrorFn(err) {
             if (!err.originalError) {
               return err;
             }

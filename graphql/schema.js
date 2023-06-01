@@ -21,7 +21,13 @@ module.exports = buildSchema(`
         slug: String!
     }
 
+    type AuthData {
+        token: String!
+        userId: String!
+    }
+
     type RootQuery {
+        login(email: String!, password: String!): AuthData!
         tags(page: Int): TagData!
         tag(id: ID!): Tag!
         hello:String!

@@ -1,5 +1,7 @@
 const User = require('../models/userModel');
 const Tag = require('../models/tagModel');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const validator = require('validator');
 
@@ -8,6 +10,30 @@ module.exports = {
   hello: () => {
     return "Hello world!"
   },
+  login: async function({ email, password }) {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      const error = new Error('User not found.');
+      error.code = 401;
+      throw error;
+    }
+    const isEqual = await bcrypt.compare(password, user.password);
+    if (!isEqual) {
+      const error = new Error('Password is incorrect.');
+      error.code = 401;
+      throw error;
+    }
+    const token = jwt.sign(
+      {
+        userId: user._id.toString(),
+        email: user.email
+      },
+      'somesupersecretsecret',
+      { expiresIn: '1h' }
+    );
+    return { token: token, userId: user._id.toString() };
+  },
+  
   createTag: async function({ tagInput }, req) {
     console.log('111');
 
