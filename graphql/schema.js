@@ -9,10 +9,20 @@ module.exports = buildSchema(`
         createdAt: String!
         updatedAt: String!
     }
+    type paginationData {
+        totalItems: Int!
+        itemPerPage:Int!
+        currentPage: Int!
+        hasNextPage: Int!
+        hasPreviousPage: Int!
+        nextPage: Int!
+        previousPage: Int!
+        lastPage: Int!
+    }
 
     type TagData {
         tags: [Tag!]!
-        totalTags: Int!
+        pagination:paginationData
     }
 
     input TagInputData {
@@ -28,7 +38,7 @@ module.exports = buildSchema(`
 
     type RootQuery {
         login(email: String!, password: String!): AuthData!
-        tags(page: Int): TagData!
+        tags(page: Int,perPage:Int): TagData!
         tag(id: ID!): Tag!
         hello:String!
     }

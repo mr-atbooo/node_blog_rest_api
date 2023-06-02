@@ -78,16 +78,18 @@ module.exports = {
       updatedAt: createdTag.updatedAt.toISOString()
     };
   },
-  tags: async function({ page }, req) {
-    // if (!page) {
-    //   page = 1;
-    // }
-    // const perPage = 2;
-    const totalTags = await Tag.find().countDocuments();
+  tags: async function({ page,perPage }, req) {
+    if (!page) {
+      page = 1;
+    } 
+    if (!perPage) {
+      perPage = 2;
+    }
+    const totalItems = await Tag.find().countDocuments();
     const tags = await Tag.find()
-      .sort({ createdAt: -1 });
-      // .skip((page - 1) * perPage)
-      // .limit(perPage);
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
     return {
       tags: tags.map(p => {
         return {
@@ -97,7 +99,16 @@ module.exports = {
           updatedAt: p.updatedAt.toISOString()
         };
       }),
-      totalTags: totalTags
+      pagination:{
+        totalItems: totalItems,
+        itemPerPage:perPage,
+        currentPage: page,
+        hasNextPage: perPage * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / perPage)
+      }
     };
   },
   tag: async function({ id }, req) {
